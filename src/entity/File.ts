@@ -8,6 +8,7 @@ import {
 import { Answer } from "./Answer";
 import { Course } from "./Course";
 import { Question } from "./Question";
+import { Section } from "./Section";
 
 @Entity({ name: "files" })
 export class File {
@@ -25,4 +26,7 @@ export class File {
 
 	@OneToMany(() => Answer, (answer) => answer.file)
 	answers: Answer[];
+
+	@ManyToOne(() => Section, (section) => section.files)
+	section: Section;
 }

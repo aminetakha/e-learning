@@ -10,6 +10,7 @@ import { File } from "./File";
 import { Instructor } from "./Instructor";
 import { Question } from "./Question";
 import { Review } from "./Review";
+import { Section } from "./Section";
 
 @Entity({ name: "courses" })
 export class Course {
@@ -26,6 +27,9 @@ export class Course {
 	content: string;
 
 	@Column()
+	price: number;
+
+	@Column()
 	thumbnail: string;
 
 	@OneToMany(() => File, (file) => file.course)
@@ -39,4 +43,7 @@ export class Course {
 
 	@OneToMany(() => Review, (review) => review.course)
 	reviews: Review[];
+
+	@OneToMany(() => Section, (section) => section.files)
+	sections: Section[];
 }

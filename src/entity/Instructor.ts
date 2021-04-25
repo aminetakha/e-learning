@@ -21,10 +21,25 @@ export class Instructor {
 	about: string;
 
 	@Column()
+	photo: string;
+
+	@Column()
 	email: string;
 
 	@Column()
 	password: string;
+
+	@Column()
+	website: string;
+
+	@Column()
+	github: string;
+
+	@Column()
+	twitter: string;
+
+	@Column()
+	youtube: string;
 
 	@Column()
 	country: string;
