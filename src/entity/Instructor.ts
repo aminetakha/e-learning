@@ -1,11 +1,4 @@
-import {
-	Column,
-	Entity,
-	JoinTable,
-	ManyToMany,
-	OneToMany,
-	PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Answer } from "./Answer";
 import { Course } from "./Course";
 
@@ -43,6 +36,9 @@ export class Instructor {
 
 	@Column()
 	country: string;
+
+	@Column({ default: new Date().getFullYear() })
+	createdAt: number;
 
 	@OneToMany(() => Course, (course) => course.instructor)
 	courses: Course[];
