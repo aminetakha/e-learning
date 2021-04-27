@@ -4,6 +4,7 @@ import { LoginDto } from "../dto/loginDto";
 import { Instructor } from "../entity/Instructor";
 import { Student } from "../entity/Student";
 import createJwtToken from "../util/createJwtToken";
+import verifyPassword from "../util/verifyPassword";
 
 @Service()
 export class LoginService {
@@ -17,13 +18,18 @@ export class LoginService {
 		const { email, password } = loginDto;
 		const user =
 			userType === "student"
-				? await this.studentRepository.findOne({
-						email,
-						password,
-				  })
-				: await this.instructorRepository.findOne({ email, password });
+				? await this.studentRepository.findOne({ email })
+				: await this.instructorRepository.findOne({ email });
+
+		console.log(loginDto, userType);
+
 		if (!user) {
 			return { error: "not found" };
+		}
+
+		const result = await verifyPassword(password, user.password);
+		if (!result) {
+			return { error: "Wrong password" };
 		}
 
 		const token = await createJwtToken({ user: user.id });
