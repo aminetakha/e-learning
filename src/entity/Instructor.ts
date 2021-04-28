@@ -1,4 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+	BeforeInsert,
+	Column,
+	Entity,
+	OneToMany,
+	PrimaryGeneratedColumn,
+} from "typeorm";
 import { Answer } from "./Answer";
 import { Course } from "./Course";
 
@@ -40,7 +46,9 @@ export class Instructor {
 	@Column({ default: new Date().getFullYear() })
 	createdAt: number;
 
-	@OneToMany(() => Course, (course) => course.instructor)
+	@OneToMany(() => Course, (course) => course.instructor, {
+		onDelete: "CASCADE",
+	})
 	courses: Course[];
 
 	@OneToMany(() => Answer, (answer) => answer.instructor)

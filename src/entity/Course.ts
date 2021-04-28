@@ -35,7 +35,9 @@ export class Course {
 	@OneToMany(() => File, (file) => file.course)
 	files: File[];
 
-	@ManyToOne(() => Instructor, (instrutor) => instrutor.courses)
+	@ManyToOne(() => Instructor, (instrutor) => instrutor.courses, {
+		onDelete: "CASCADE",
+	})
 	instructor: Instructor;
 
 	@ManyToOne(() => Category, (category) => category.courses)
