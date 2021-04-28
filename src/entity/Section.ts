@@ -7,7 +7,7 @@ export class Section {
 	id: number;
 
 	@Column()
-	title: number;
+	title: string;
 
 	@OneToMany(() => File, (file) => file.section)
 	files: File[];
