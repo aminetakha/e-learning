@@ -29,14 +29,16 @@ export class CourseService {
 
 	async getCourseByTitle(title: string) {
 		const courses = await this.courseRepository.find({
-			title: Like(`%${title}%`),
+			where: { title: Like(`%${title}%`) },
+			relations: ["reviews"],
 		});
 		return courses;
 	}
 
 	async getCourseByPrice(price: number) {
 		const courses = await this.courseRepository.find({
-			price: LessThanOrEqual(price),
+			where: { price: LessThanOrEqual(price) },
+			relations: ["reviews"],
 		});
 		return courses;
 	}
