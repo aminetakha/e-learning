@@ -24,6 +24,18 @@ router.get("/instructor/:instructor", async (req: Request, res: Response) => {
 	res.json(courses);
 });
 
+router.get("/popular", async (req: Request, res: Response) => {
+	const courseService = Container.get(CourseService);
+	const courses = await courseService.getMostPopular();
+	res.json(courses);
+});
+
+router.get("/latest", async (req: Request, res: Response) => {
+	const courseService = Container.get(CourseService);
+	const courses = await courseService.getLatest();
+	res.json(courses);
+});
+
 router.get("/:title", async (req: Request, res: Response) => {
 	const courseService = Container.get(CourseService);
 	const { title } = req.params;

@@ -14,8 +14,8 @@ export class Review {
 	rating: number;
 
 	@ManyToOne(() => Student, (student) => student.courses)
-	student: Student[];
+	student: Student;
 
 	@ManyToOne(() => Course, (course) => course.reviews)
-	course: Course[];
+	course: Course;
 }

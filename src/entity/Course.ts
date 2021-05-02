@@ -32,6 +32,14 @@ export class Course {
 	@Column()
 	thumbnail: string;
 
+	@Column({
+		name: "created_at",
+		type: "datetime",
+		precision: 6,
+		default: () => "CURRENT_TIMESTAMP(6)",
+	})
+	createdAt: string;
+
 	@OneToMany(() => File, (file) => file.course)
 	files: File[];
 
