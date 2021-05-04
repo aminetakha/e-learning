@@ -4,9 +4,11 @@ import {
 	JoinTable,
 	ManyToMany,
 	OneToMany,
+	OneToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
 import { Answer } from "./Answer";
+import { Cart } from "./Cart";
 import { Course } from "./Course";
 import { Exam } from "./Exam";
 import { Question } from "./Question";
@@ -35,6 +37,9 @@ export class Student {
 	@ManyToMany(() => Course)
 	@JoinTable()
 	courses: Course[];
+
+	@OneToOne(() => Cart, (cart) => cart.student)
+	cart: Cart;
 
 	@OneToMany(() => Review, (review) => review.student)
 	reviews: Review[];
