@@ -75,5 +75,18 @@ export default (theme) => {
 		more: {
 			color: "black",
 		},
+		cartBtnContainer: {
+			position: "relative",
+		},
+		rating: {
+			position: "absolute",
+			top: -5,
+			right: 5,
+			width: 23,
+			height: 23,
+			backgroundColor: "crimson",
+			color: "white",
+			borderRadius: "50%",
+		},
 	};
 };

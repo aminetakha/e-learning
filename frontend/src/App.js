@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeRoute from "./routes/HomeRoute";
 import CategoryCoursesRoute from "./routes/CategoryCoursesRoute";
 import Course from "./components/Course";
+import Cart from "./components/Cart";
 
 const App = () => {
 	return (
@@ -11,6 +12,7 @@ const App = () => {
 			<Navbar />
 			<Switch>
 				<Route exact path="/" component={HomeRoute} />
+				<Route path="/cart" component={Cart} />
 				<Route
 					path="/courses/category/:category"
 					component={CategoryCoursesRoute}

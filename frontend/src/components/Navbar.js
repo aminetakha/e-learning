@@ -12,13 +12,16 @@ import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import navStyle from "../styles/navStyle";
+import { useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => navStyle(theme));
 
-export default function PrimarySearchAppBar() {
+const Navbar = ({ history }) => {
 	const classes = useStyles();
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+	const cart = useSelector((state) => state.cart);
 
 	const handleMobileMenuClose = () => {
 		setMobileMoreAnchorEl(null);
@@ -73,8 +76,16 @@ export default function PrimarySearchAppBar() {
 					</div>
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
-						<Button>
-							<ShoppingCartOutlinedIcon />
+						<Button
+							className={classes.cartBtnContainer}
+							onClick={() => history.push("/cart")}
+						>
+							<div className={classes.rating}>
+								{cart.items.length}
+							</div>
+							<div className={classes.cartIcon}>
+								<ShoppingCartOutlinedIcon />
+							</div>
 						</Button>
 						<Button color="secondary">Log in</Button>
 						<Button color="secondary">Sign up</Button>
@@ -95,4 +106,6 @@ export default function PrimarySearchAppBar() {
 			{renderMobileMenu}
 		</div>
 	);
-}
+};
+
+export default withRouter(Navbar);

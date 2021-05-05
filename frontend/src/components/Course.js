@@ -9,8 +9,10 @@ import {
 	Grid,
 	Typography,
 	makeStyles,
-	Container,
 } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../actions/cart";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 	media: {
@@ -39,7 +41,10 @@ const Course = () => {
 	const { title } = useParams();
 	const [course, setCourse] = useState(null);
 	const [rating, setRating] = useState(0);
+	const [courseAdded, setCourseAdded] = useState(false);
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const cart = useSelector((state) => state.cart);
 
 	useEffect(() => {
 		axios
@@ -51,9 +56,25 @@ const Course = () => {
 				const averageRating = totalRating / res.data[0].reviews.length;
 				setCourse(res.data[0]);
 				setRating(averageRating);
+				const found = cart.items.find(
+					(item) => item.id === res.data[0].id
+				);
+				setCourseAdded(found);
 			})
 			.catch((err) => console.log(err));
 	}, [title]);
+
+	const addToCartHandler = (item) => {
+		dispatch(
+			addToCart({
+				id: item.id,
+				title: item.title,
+				price: item.price,
+				thumbnail: item.thumbnail,
+			})
+		);
+		setCourseAdded(true);
+	};
 
 	return (
 		<React.Fragment>
@@ -83,7 +104,20 @@ const Course = () => {
 								title="Course"
 							/>
 							<CardContent className={classes.actions}>
-								<Button>Add To Cart</Button>
+								{courseAdded ? (
+									<Link
+										to="/cart"
+										style={{ textDecoration: "none" }}
+									>
+										<Button>Go To Cart</Button>
+									</Link>
+								) : (
+									<Button
+										onClick={() => addToCartHandler(course)}
+									>
+										Add To Cart
+									</Button>
+								)}
 								<Button>Buy Now</Button>
 							</CardContent>
 						</Card>
