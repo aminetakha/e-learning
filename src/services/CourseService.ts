@@ -30,11 +30,19 @@ export class CourseService {
 	}
 
 	async getCourseByTitle(title: string) {
-		const courses = await this.courseRepository.find({
+		const courses = await this.courseRepository.findOne({
 			where: { title: Like(`%${title}%`) },
-			relations: ["reviews"],
+			relations: [
+				"reviews",
+				"reviews.student",
+				"sections",
+				"sections.files",
+				"instructor",
+			],
 		});
-		return courses;
+		return {
+			...courses,
+		};
 	}
 
 	async getCourseByPrice(price: number) {
@@ -47,16 +55,24 @@ export class CourseService {
 
 	async getMostPopular() {
 		const courses = await getManager().query(
-			"select avg(rating) as average_rating, courses.* from reviews, courses where reviews.courseId = courses.id group by courseId order by average_rating desc"
+			"select avg(rating) as average_rating, courses.*, instructors.username from reviews, courses, instructors where reviews.courseId = courses.id and courses.instructorId = instructors.id group by courseId order by average_rating desc"
 		);
 		return courses;
 	}
 
+	/*
 	async getLatest() {
 		const courses = await this.courseRepository.find({
 			order: { createdAt: "DESC" },
 			take: 5,
 		});
+		return courses;
+	}*/
+
+	async getLatest() {
+		const courses = await getManager().query(
+			"select avg(rating) as average_rating, courses.*, instructors.username from reviews, courses, instructors where reviews.courseId = courses.id and courses.instructorId = instructors.id group by courseId order by created_at desc"
+		);
 		return courses;
 	}
 }

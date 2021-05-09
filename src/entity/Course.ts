@@ -54,6 +54,6 @@ export class Course {
 	@OneToMany(() => Review, (review) => review.course)
 	reviews: Review[];
 
-	@OneToMany(() => Section, (section) => section.files)
+	@OneToMany(() => Section, (section) => section.course)
 	sections: Section[];
 }

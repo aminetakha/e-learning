@@ -18,7 +18,10 @@ export class LoginService {
 		const { email, password } = loginDto;
 		const user =
 			userType === "student"
-				? await this.studentRepository.findOne({ email })
+				? await this.studentRepository.findOne({
+						where: { email },
+						select: ["email", "password"],
+				  })
 				: await this.instructorRepository.findOne({ email });
 
 		console.log(loginDto, userType);
