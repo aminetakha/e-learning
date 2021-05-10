@@ -25,7 +25,9 @@ const Latest = () => {
 			</div>
 			<div style={styles}>
 				{courses.length > 0 &&
-					courses.map((course) => <Course course={course} />)}
+					courses.map((course) => (
+						<Course course={course} key={course.id} />
+					))}
 			</div>
 		</div>
 	);

@@ -1,17 +1,18 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
-import express, { Request, Response } from "express";
+import express from "express";
 import router from "./routes";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 createConnection()
 	.then(async (connection) => {
 		const app = express();
-		// app.use("/frontend/uploads", express.static("frontend/uploads"));
 		app.use(express.static("public/assets"));
 		app.use(express.static("public/uploads"));
-		app.use(cors());
+		app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 		app.use(express.json());
+		app.use(cookieParser());
 
 		app.use("/", router);
 

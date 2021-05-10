@@ -13,7 +13,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import navStyle from "../styles/navStyle";
 import { useSelector } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => navStyle(theme));
 
@@ -22,6 +22,7 @@ const Navbar = ({ history }) => {
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 	const cart = useSelector((state) => state.cart);
+	const auth = useSelector((state) => state.auth);
 
 	const handleMobileMenuClose = () => {
 		setMobileMoreAnchorEl(null);
@@ -42,12 +43,29 @@ const Navbar = ({ history }) => {
 			open={isMobileMenuOpen}
 			onClose={handleMobileMenuClose}
 		>
-			<MenuItem>
-				<Button color="primary">Log in</Button>
-			</MenuItem>
-			<MenuItem>
-				<Button color="secondary">Sign up</Button>
-			</MenuItem>
+			{auth.isAuthenticated ? (
+				<>
+					<MenuItem>
+						<img
+							src={`http://localhost:5000/${auth.user.photo}`}
+							width="30px"
+							height="30px"
+						/>
+					</MenuItem>
+					<MenuItem>
+						<Button color="secondary">Log out</Button>
+					</MenuItem>
+				</>
+			) : (
+				<>
+					<MenuItem>
+						<Button color="primary">Log in</Button>
+					</MenuItem>
+					<MenuItem>
+						<Button color="secondary">Sign up</Button>
+					</MenuItem>
+				</>
+			)}
 			<MenuItem>
 				<Button>Cart</Button>
 			</MenuItem>
@@ -81,14 +99,45 @@ const Navbar = ({ history }) => {
 							onClick={() => history.push("/cart")}
 						>
 							<div className={classes.rating}>
-								{cart.items.length}
+								{auth.isAuthenticated
+									? auth.cart
+									: cart.items.length}
 							</div>
 							<div className={classes.cartIcon}>
 								<ShoppingCartOutlinedIcon />
 							</div>
 						</Button>
-						<Button color="secondary">Log in</Button>
-						<Button color="secondary">Sign up</Button>
+						{auth.isAuthenticated ? (
+							<div
+								style={{
+									display: "flex",
+									alignItems: "center",
+								}}
+							>
+								<Link
+									to="/courses"
+									style={{ margin: "0px 10px" }}
+								>
+									View Courses
+								</Link>
+								<img
+									src={`http://localhost:5000/${auth.user.photo}`}
+									width="35px"
+									height="35px"
+									style={{
+										margin: "0px 10px",
+										borderRadius: "50%",
+									}}
+								/>
+
+								<Button color="secondary">Log out</Button>
+							</div>
+						) : (
+							<>
+								<Button color="secondary">Log in</Button>
+								<Button color="secondary">Sign up</Button>
+							</>
+						)}
 					</div>
 					<div className={classes.sectionMobile}>
 						<IconButton

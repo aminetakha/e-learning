@@ -8,7 +8,13 @@ router.post("/student", async (req: Request, res: Response) => {
 	if (typeof response !== "string" && "error" in response) {
 		return res.status(404).json({ message: response.error });
 	}
-	res.status(200).json({ token: response, type: "student" });
+	console.log("response", response);
+	res.cookie("jwt", response.token, { httpOnly: true });
+	res.status(200).json({
+		user: response.user,
+		type: "student",
+		cart: response.cart,
+	});
 });
 router.post("/instructor", async (req: Request, res: Response) => {
 	const { credentials, loginService } = loginCredentialsAndService(req.body);

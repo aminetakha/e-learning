@@ -6,25 +6,40 @@ import { Student } from "../entity/Student";
 import createJwtToken from "../util/createJwtToken";
 import verifyPassword from "../util/verifyPassword";
 
+interface CurrentUser {
+	id: number;
+	username: string;
+	photo: string;
+}
+
+interface Response {
+	token: string;
+	user: CurrentUser;
+}
+
 @Service()
 export class LoginService {
 	private studentRepository = getRepository(Student);
 	private instructorRepository = getRepository(Instructor);
 
-	async userLogin(
-		loginDto: LoginDto,
-		userType: string
-	): Promise<string | { error: string }> {
+	async userLogin(loginDto: LoginDto, userType: string) {
 		const { email, password } = loginDto;
 		const user =
 			userType === "student"
 				? await this.studentRepository.findOne({
 						where: { email },
-						select: ["email", "password"],
+						select: [
+							"email",
+							"password",
+							"id",
+							"username",
+							"photo",
+						],
+						relations: ["cart", "cart.courses"],
 				  })
 				: await this.instructorRepository.findOne({ email });
 
-		console.log(loginDto, userType);
+		console.log((user as any).cart);
 
 		if (!user) {
 			return { error: "not found" };
@@ -36,6 +51,15 @@ export class LoginService {
 		}
 
 		const token = await createJwtToken({ user: user.id });
-		return token;
+		const currUser = {
+			id: user.id,
+			username: user.username,
+			photo: user.photo,
+		};
+		return {
+			token,
+			user: currUser,
+			cart: (user as any).cart.courses.length,
+		};
 	}
 }

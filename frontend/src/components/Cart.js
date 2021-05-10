@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@material-ui/core";
 import { removeFromCart } from "../actions/cart";
+import CartItem from "./CartItem";
+import { useDispatch, useSelector } from "react-redux";
 
 const Cart = () => {
 	const cartItems = useSelector((state) => state.cart.items);
@@ -32,39 +33,11 @@ const Cart = () => {
 		<div style={{ display: "flex", marginTop: "50px" }}>
 			<div style={{ flex: 2 }}>
 				{cartItems.map((item) => (
-					<div
+					<CartItem
+						item={item}
+						remove={removeItemHandler}
 						key={item.id}
-						style={{
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "space-around",
-							margin: "20px",
-						}}
-					>
-						<div>
-							<img
-								src={`http://localhost:5000/${item.thumbnail}`}
-							/>
-						</div>
-						<div
-							style={{
-								display: "flex",
-							}}
-						>
-							<p>
-								<b>{item.title}</b>
-							</p>
-							<p
-								style={{ marginLeft: "40px" }}
-								onClick={() => removeItemHandler(item.id)}
-							>
-								Remove
-							</p>
-						</div>
-						<div>
-							<p>{`$${item.price}`}</p>
-						</div>
-					</div>
+					/>
 				))}
 			</div>
 			<div

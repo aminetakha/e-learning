@@ -17,6 +17,7 @@ import Content from "./Content";
 import Instructor from "./Instructor";
 import Review from "./Review";
 import InstructorCourses from "./InstructorCourses";
+import { addCourse } from "../actions/auth";
 
 const useStyles = makeStyles((theme) => ({
 	media: {
@@ -53,6 +54,7 @@ const CourseDetails = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const cart = useSelector((state) => state.cart);
+	const auth = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		axios
@@ -64,9 +66,30 @@ const CourseDetails = () => {
 				const averageRating = totalRating / res.data.reviews.length;
 				setCourse(res.data);
 				setRating(averageRating);
-				const found = cart.items.find(
-					(item) => item.id === res.data.id
-				);
+				let found;
+				if (auth.isAuthenticated) {
+					const courseId = res.data.id;
+					axios
+						.get(
+							"http://localhost:5000/students/cart/course/" +
+								courseId,
+							{ withCredentials: true }
+						)
+						.then((res) => {
+							if ("success" in res.data) {
+								found = true;
+							} else {
+								found = false;
+							}
+							setCourseAdded(found);
+						})
+						.catch((err) => {
+							found = false;
+							setCourseAdded(found);
+						});
+				} else {
+					found = cart.items.find((item) => item.id === res.data.id);
+				}
 				setCourseAdded(found);
 				setContent((content) => [...content, ...res.data.sections]);
 			})
@@ -83,6 +106,24 @@ const CourseDetails = () => {
 			})
 		);
 		setCourseAdded(true);
+	};
+
+	const addToStudentCartHandler = async (item) => {
+		const data = {
+			courseId: item.id,
+		};
+		const res = await axios.post(
+			"http://localhost:5000/students/cart",
+			data,
+			{ withCredentials: true },
+			{
+				headers: { "content-type": "application/json" },
+			}
+		);
+		if ("success" in res.data) {
+			dispatch(addCourse());
+			setCourseAdded(true);
+		}
 	};
 
 	return (
@@ -124,7 +165,11 @@ const CourseDetails = () => {
 									) : (
 										<Button
 											onClick={() =>
-												addToCartHandler(course)
+												auth.isAuthenticated
+													? addToStudentCartHandler(
+															course
+													  )
+													: addToCartHandler(course)
 											}
 										>
 											Add To Cart
