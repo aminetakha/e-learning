@@ -1,16 +1,33 @@
-import { Service } from "typedi";
+import Container, { Service } from "typedi";
 import { getManager, getRepository, LessThanOrEqual, Like } from "typeorm";
+import { Answer } from "../entity/Answer";
 import { Category } from "../entity/Category";
 import { Course } from "../entity/Course";
+import { File } from "../entity/File";
 import { Instructor } from "../entity/Instructor";
+import { Question } from "../entity/Question";
 import { Review } from "../entity/Review";
+<<<<<<< HEAD
+=======
+import { Section } from "../entity/Section";
+import { Student } from "../entity/Student";
+import { InstructorService } from "./InstructorService";
+import { StudentService } from "./StudentService";
+>>>>>>> 28ca805... Added question and answers functionality
 
 @Service()
 export class CourseService {
 	private categoryRepository = getRepository(Category);
 	private courseRepository = getRepository(Course);
 	private instructorRepository = getRepository(Instructor);
+<<<<<<< HEAD
 	private reviewRepository = getRepository(Review);
+=======
+	private answerRepository = getRepository(Answer);
+	private sectionRepository = getRepository(Section);
+	private questionRepository = getRepository(Question);
+	private fileRepository = getRepository(File);
+>>>>>>> 28ca805... Added question and answers functionality
 
 	async getCoursesByCategory(category: string) {
 		const courses = await this.categoryRepository.find({
@@ -37,6 +54,22 @@ export class CourseService {
 				"reviews.student",
 				"sections",
 				"sections.files",
+				"instructor",
+			],
+		});
+		return {
+			...courses,
+		};
+	}
+
+	async getCourseFilesByTitle(title: string) {
+		const courses = await this.courseRepository.findOne({
+			where: { title: Like(`%${title}%`) },
+			relations: [
+				"sections",
+				"sections.files",
+				"sections.files.questions",
+				"sections.files.questions.student",
 				"instructor",
 			],
 		});
@@ -75,4 +108,73 @@ export class CourseService {
 		);
 		return courses;
 	}
+<<<<<<< HEAD
+=======
+
+	async getCourseById(id: number) {
+		const course = await this.courseRepository.findOne(id);
+		return course;
+	}
+
+	async addSectionForCourse(courseId: number, title: string) {
+		let section = new Section();
+		const course = await this.getCourseById(courseId);
+		section.title = title;
+		section.course = course;
+		section = await this.sectionRepository.save(section);
+		return section;
+	}
+
+	async updateSectionName(sectionId: number, title: string) {
+		const section = await this.sectionRepository.findOne(sectionId);
+		section.title = title;
+		await this.sectionRepository.save(section);
+	}
+
+	async getCourseAnswers(questionId: number) {
+		const course = await this.questionRepository.findOne(questionId, {
+			relations: ["answers", "answers.student", "answers.instructor"],
+		});
+		return course;
+	}
+
+	async addQuestion(fileId: number, studentId: number, question: string) {
+		const file = await this.fileRepository.findOne(fileId);
+		const studentService = Container.get(StudentService);
+		const student = await studentService.getStudentById(studentId);
+		const q = new Question();
+		q.question = question;
+		q.file = file;
+		q.student = student;
+		const addedQuestion = await this.questionRepository.save(q);
+		return addedQuestion;
+	}
+
+	async addAnswer(
+		userId: number,
+		type: string,
+		answer: string,
+		questionId: number
+	) {
+		let service =
+			type === "student"
+				? Container.get(StudentService)
+				: Container.get(InstructorService);
+		let user;
+		if (service instanceof StudentService) {
+			user = await service.getStudentById(userId);
+		} else if (service instanceof InstructorService) {
+			user = await service.findById(userId);
+		}
+
+		const question = await this.questionRepository.findOne(questionId);
+		const a = new Answer();
+		a.answer = answer;
+		a.question = question;
+		a.instructor = type === "instructor" ? user : null;
+		a.student = type === "student" ? user : null;
+		const addedAnswer = await this.answerRepository.save(a);
+		return addedAnswer;
+	}
+>>>>>>> 28ca805... Added question and answers functionality
 }

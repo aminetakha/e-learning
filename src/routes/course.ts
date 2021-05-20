@@ -43,4 +43,52 @@ router.get("/:title", async (req: Request, res: Response) => {
 	res.json(courses);
 });
 
+<<<<<<< HEAD
+=======
+router.get("/:title/files", async (req: Request, res: Response) => {
+	const courseService = Container.get(CourseService);
+	const { title } = req.params;
+	const courses = await courseService.getCourseFilesByTitle(title);
+	res.json(courses);
+});
+
+router.post("/:id/section", async (req: Request, res: Response) => {
+	const courseService = Container.get(CourseService);
+	const { id } = req.params;
+	const { title } = req.body;
+	const section = await courseService.addSectionForCourse(
+		parseInt(id),
+		title
+	);
+	res.json({ msg: section });
+});
+
+router.patch("/:id/section", async (req: Request, res: Response) => {
+	try {
+		const courseService = Container.get(CourseService);
+		const { id } = req.params;
+		const { title } = req.body;
+		await courseService.updateSectionName(parseInt(id), title);
+		res.json({ success: "Updated successfully" });
+	} catch (error) {
+		res.json({ error: "An erroc occured" });
+	}
+});
+
+router.post(
+	"/:id/file",
+	upload.single("file"),
+	async (req: Request, res: Response) => {
+		const fileService = Container.get(FileService);
+		const { id } = req.params;
+		const filename = req.file.filename;
+		const file = await fileService.uploadFileForSection(
+			parseInt(id),
+			filename
+		);
+		res.json({ msg: file });
+	}
+);
+
+>>>>>>> 28ca805... Added question and answers functionality
 export default router;

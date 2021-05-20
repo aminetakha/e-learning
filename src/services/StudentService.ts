@@ -8,6 +8,11 @@ export class StudentService {
 	private studentRepository = getRepository(Student);
 	private cartRepository = getRepository(Cart);
 
+	async getStudentById(id: number) {
+		const student = await this.studentRepository.findOne(id);
+		return student;
+	}
+
 	async getStudentCart(id: number) {
 		const cart = await this.studentRepository.findOne(id, {
 			relations: ["cart", "cart.courses"],

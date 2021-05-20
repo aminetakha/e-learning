@@ -12,7 +12,9 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		width: "100%",
 		maxWidth: 650,
+		height: "100%",
 		backgroundColor: theme.palette.background.paper,
+		overflowY: "scroll",
 	},
 	nested: {
 		paddingLeft: theme.spacing(4),
@@ -68,10 +70,23 @@ const Content = ({ course }) => {
 						unmountOnExit
 					>
 						<List component="div" disablePadding>
-							{section.files.map((file) => (
+							{section.files.map((file, fileIndex) => (
 								<React.Fragment key={file.id}>
 									<ListItem button className={classes.nested}>
+<<<<<<< HEAD
 										<ListItemText primary={file.name} />
+=======
+										<ListItemText
+											primary={file.name}
+											onClick={() =>
+												readFile(
+													file.name,
+													fileIndex,
+													index
+												)
+											}
+										/>
+>>>>>>> 28ca805... Added question and answers functionality
 									</ListItem>
 								</React.Fragment>
 							))}

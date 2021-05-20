@@ -134,7 +134,12 @@ const Navbar = ({ history }) => {
 							</div>
 						) : (
 							<>
-								<Button color="secondary">Log in</Button>
+								<Button
+									color="secondary"
+									onClick={() => history.push("/login")}
+								>
+									Log in
+								</Button>
 								<Button color="secondary">Sign up</Button>
 							</>
 						)}
