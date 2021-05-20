@@ -60,10 +60,16 @@ const CourseDetails = () => {
 		axios
 			.get(`http://localhost:5000/courses/${title}`)
 			.then((res) => {
-				const totalRating = res.data.reviews.reduce(
-					(acc, curr) => acc.rating + curr.rating
-				);
-				const averageRating = totalRating / res.data.reviews.length;
+				const totalRating =
+					res.data.reviews.length > 0
+						? res.data.reviews.reduce(
+								(acc, curr) => acc.rating + curr.rating
+						  )
+						: 0;
+				const averageRating =
+					totalRating !== 0
+						? totalRating / res.data.reviews.length
+						: 0;
 				setCourse(res.data);
 				setRating(averageRating);
 				let found;

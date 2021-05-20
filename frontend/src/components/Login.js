@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../actions/auth";
-import { Redirect } from "react-router";
 
 const Login = (props) => {
 	const [credentials, setCredentials] = useState({
 		email: "",
 		password: "",
+		type: "student",
 	});
 
 	const dispatch = useDispatch();
@@ -21,12 +21,14 @@ const Login = (props) => {
 
 	const loginHandler = (e) => {
 		e.preventDefault();
+		const URL = "http://localhost:5000/login/" + credentials.type;
 		axios
-			.post("http://localhost:5000/login/student", credentials, {
+			.post(URL, credentials, {
 				withCredentials: true,
 			})
 			.then((res) => {
-				console.log("data", res.data.user);
+				const user = res.data.user;
+				user.type = res.data.type;
 				dispatch(login(res.data.user, res.data.cart));
 				props.history.replace("/");
 			})
@@ -36,6 +38,22 @@ const Login = (props) => {
 	return (
 		<div>
 			<form onSubmit={loginHandler}>
+				<div>
+					<input
+						type="radio"
+						name="type"
+						value="student"
+						onChange={onChangeHandler}
+					/>{" "}
+					Student
+					<input
+						type="radio"
+						name="type"
+						value="instructor"
+						onChange={onChangeHandler}
+					/>{" "}
+					Instructor
+				</div>
 				<input
 					type="text"
 					name="email"

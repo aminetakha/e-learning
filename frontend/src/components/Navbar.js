@@ -12,8 +12,10 @@ import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import navStyle from "../styles/navStyle";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
+import axios from "axios";
+import { logout } from "../actions/auth";
 
 const useStyles = makeStyles((theme) => navStyle(theme));
 
@@ -23,6 +25,7 @@ const Navbar = ({ history }) => {
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 	const cart = useSelector((state) => state.cart);
 	const auth = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
 
 	const handleMobileMenuClose = () => {
 		setMobileMoreAnchorEl(null);
@@ -30,6 +33,14 @@ const Navbar = ({ history }) => {
 
 	const handleMobileMenuOpen = (event) => {
 		setMobileMoreAnchorEl(event.currentTarget);
+	};
+
+	const logoutHandler = (e) => {
+		axios.get("http://localhost:5000/logout").then((res) => {
+			localStorage.removeItem("persist:root");
+			dispatch(logout());
+			history.replace("/");
+		});
 	};
 
 	const mobileMenuId = "primary-search-account-menu-mobile";
@@ -53,7 +64,9 @@ const Navbar = ({ history }) => {
 						/>
 					</MenuItem>
 					<MenuItem>
-						<Button color="secondary">Log out</Button>
+						<Button color="secondary" onClick={logoutHandler}>
+							Log out
+						</Button>
 					</MenuItem>
 				</>
 			) : (
@@ -115,7 +128,7 @@ const Navbar = ({ history }) => {
 								}}
 							>
 								<Link
-									to="/courses"
+									to="/my-courses"
 									style={{ margin: "0px 10px" }}
 								>
 									View Courses
@@ -130,7 +143,12 @@ const Navbar = ({ history }) => {
 									}}
 								/>
 
-								<Button color="secondary">Log out</Button>
+								<Button
+									color="secondary"
+									onClick={logoutHandler}
+								>
+									Log out
+								</Button>
 							</div>
 						) : (
 							<>
@@ -140,21 +158,6 @@ const Navbar = ({ history }) => {
 								>
 									Log in
 								</Button>
-<<<<<<< HEAD
-=======
-							</div>
-						) : (
-							<>
-								<Button
-									color="secondary"
-									onClick={() => history.push("/login")}
-								>
-									Log in
-								</Button>
-<<<<<<< HEAD
->>>>>>> 28ca805... Added question and answers functionality
-=======
->>>>>>> 28ca805... Added question and answers functionality
 								<Button color="secondary">Sign up</Button>
 							</>
 						)}

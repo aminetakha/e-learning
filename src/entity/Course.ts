@@ -8,7 +8,6 @@ import {
 import { Category } from "./Category";
 import { File } from "./File";
 import { Instructor } from "./Instructor";
-import { Question } from "./Question";
 import { Review } from "./Review";
 import { Section } from "./Section";
 
@@ -24,6 +23,9 @@ export class Course {
 	description: string;
 
 	@Column()
+	requirements: string;
+
+	@Column()
 	content: string;
 
 	@Column()
@@ -31,6 +33,9 @@ export class Course {
 
 	@Column()
 	thumbnail: string;
+
+	@Column()
+	target: string;
 
 	@Column({
 		name: "created_at",

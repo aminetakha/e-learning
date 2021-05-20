@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CartItem from "./CartItem";
 import { Button } from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { removeCourse } from "../actions/auth";
-
 const UserCart = () => {
 	const [courses, setCourses] = useState([]);
 	const [totalPrice, setTotalPrice] = useState(0);
+
 	useEffect(() => {
 		axios
 			.get("http://localhost:5000/students/cart", {
@@ -53,6 +53,8 @@ const UserCart = () => {
 		return <h1>Cart is empty</h1>;
 	}
 
+	const handleClick = async (event) => {};
+
 	return (
 		<div style={{ display: "flex", marginTop: "50px" }}>
 			<div style={{ flex: 2 }}>
@@ -80,7 +82,10 @@ const UserCart = () => {
 					<b>{`$${totalPrice}`}</b>
 				</h1>
 
-				<Button style={{ color: "white", backgroundColor: "crimson" }}>
+				<Button
+					style={{ color: "white", backgroundColor: "crimson" }}
+					onClick={handleClick}
+				>
 					Checkout
 				</Button>
 			</div>

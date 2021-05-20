@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import {
 	BrowserRouter as Router,
@@ -13,14 +13,43 @@ import Cart from "./components/Cart";
 import Login from "./components/Login";
 import { useSelector } from "react-redux";
 import UserCart from "./components/UserCart";
+import MyCourses from "./components/MyCourses";
+import CourseVideo from "./components/CourseVideo";
+import axios from "axios";
+import ManageCourse from "./components/ManageCourse";
+import InstructorDashboard from "./components/InstructorDashboard";
+import CreateCourse from "./components/CreateCourse";
 
 const App = () => {
 	const auth = useSelector((state) => state.auth);
+
+	// useEffect(() => {
+	// 	axios
+	// 		.get("/checkout", { withCredentials: true })
+	// 		.then((res) => console.log(res.data));
+	// }, []);
+
 	return (
 		<Router>
 			<Navbar />
 			<Switch>
 				<Route exact path="/" component={HomeRoute} />
+				<Route path="/course/:id/manage" component={ManageCourse} />
+				<Route path="/course/create" component={CreateCourse} />
+				<Route
+					path="/instructor/course"
+					component={InstructorDashboard}
+				/>
+				<Route
+					path="/my-courses"
+					render={() =>
+						auth.isAuthenticated ? (
+							<MyCourses />
+						) : (
+							<Redirect to="/" />
+						)
+					}
+				/>
 				<Route
 					path="/students/cart"
 					render={() =>
@@ -55,6 +84,7 @@ const App = () => {
 					path="/courses/category/:category"
 					component={CategoryCoursesRoute}
 				/>
+				<Route path="/learn/:title" component={CourseVideo} />
 				<Route path="/courses/:title" component={CourseDetails} />
 			</Switch>
 		</Router>

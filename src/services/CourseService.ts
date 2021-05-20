@@ -7,45 +7,20 @@ import { File } from "../entity/File";
 import { Instructor } from "../entity/Instructor";
 import { Question } from "../entity/Question";
 import { Review } from "../entity/Review";
-<<<<<<< HEAD
-=======
 import { Section } from "../entity/Section";
 import { Student } from "../entity/Student";
 import { InstructorService } from "./InstructorService";
 import { StudentService } from "./StudentService";
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 28ca805... Added question and answers functionality
-=======
->>>>>>> 28ca805... Added question and answers functionality
-=======
->>>>>>> 28ca805... Added question and answers functionality
 
 @Service()
 export class CourseService {
 	private categoryRepository = getRepository(Category);
 	private courseRepository = getRepository(Course);
 	private instructorRepository = getRepository(Instructor);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	private reviewRepository = getRepository(Review);
-=======
-=======
->>>>>>> 28ca805... Added question and answers functionality
-=======
->>>>>>> 28ca805... Added question and answers functionality
 	private answerRepository = getRepository(Answer);
 	private sectionRepository = getRepository(Section);
 	private questionRepository = getRepository(Question);
 	private fileRepository = getRepository(File);
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 28ca805... Added question and answers functionality
-=======
->>>>>>> 28ca805... Added question and answers functionality
-=======
->>>>>>> 28ca805... Added question and answers functionality
 
 	async getCoursesByCategory(category: string) {
 		const courses = await this.categoryRepository.find({
@@ -53,6 +28,28 @@ export class CourseService {
 			relations: ["courses"],
 		});
 		return courses;
+	}
+
+	async createCourse(course) {
+		const instructor = await this.instructorRepository.findOne(
+			course.instructor
+		);
+		const category = await this.categoryRepository.findOne({
+			where: { title: course.category },
+		});
+		const newCourse = new Course();
+		newCourse.title = course.category;
+		newCourse.description = course.description;
+		newCourse.content = course.content;
+		newCourse.target = course.target;
+		newCourse.category = course.category;
+		newCourse.requirements = course.requirements;
+		newCourse.thumbnail = course.thumbnail;
+		newCourse.price = parseInt(course.price);
+		newCourse.instructor = instructor;
+		newCourse.category = category;
+		const createdCourse = await this.courseRepository.save(newCourse);
+		return createdCourse.id;
 	}
 
 	async getCoursesByInstructor(instructor: string) {
@@ -126,8 +123,6 @@ export class CourseService {
 		);
 		return courses;
 	}
-<<<<<<< HEAD
-=======
 
 	async getCourseById(id: number) {
 		const course = await this.courseRepository.findOne(id);
@@ -194,11 +189,4 @@ export class CourseService {
 		const addedAnswer = await this.answerRepository.save(a);
 		return addedAnswer;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 28ca805... Added question and answers functionality
-=======
->>>>>>> 28ca805... Added question and answers functionality
-=======
->>>>>>> 28ca805... Added question and answers functionality
 }

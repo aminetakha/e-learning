@@ -8,7 +8,6 @@ router.post("/student", async (req: Request, res: Response) => {
 	if (typeof response !== "string" && "error" in response) {
 		return res.status(404).json({ message: response.error });
 	}
-	console.log("response", response);
 	res.cookie("jwt", response.token, { httpOnly: true });
 	res.status(200).json({
 		user: response.user,

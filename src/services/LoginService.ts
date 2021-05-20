@@ -39,8 +39,6 @@ export class LoginService {
 				  })
 				: await this.instructorRepository.findOne({ email });
 
-		console.log((user as any).cart);
-
 		if (!user) {
 			return { error: "not found" };
 		}

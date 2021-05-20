@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Content = ({ course }) => {
+const Content = ({ course, readFile }) => {
 	const classes = useStyles();
 	const [itemToOpen, setItemToOpen] = useState([]);
 
@@ -73,9 +73,6 @@ const Content = ({ course }) => {
 							{section.files.map((file, fileIndex) => (
 								<React.Fragment key={file.id}>
 									<ListItem button className={classes.nested}>
-<<<<<<< HEAD
-										<ListItemText primary={file.name} />
-=======
 										<ListItemText
 											primary={file.name}
 											onClick={() =>
@@ -86,7 +83,6 @@ const Content = ({ course }) => {
 												)
 											}
 										/>
->>>>>>> 28ca805... Added question and answers functionality
 									</ListItem>
 								</React.Fragment>
 							))}

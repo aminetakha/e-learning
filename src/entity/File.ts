@@ -24,8 +24,8 @@ export class File {
 	@OneToMany(() => Question, (question) => question.file)
 	questions: Question[];
 
-	@OneToMany(() => Answer, (answer) => answer.file)
-	answers: Answer[];
+	// @OneToMany(() => Answer, (answer) => answer.file)
+	// answers: Answer[];
 
 	@ManyToOne(() => Section, (section) => section.files)
 	section: Section;

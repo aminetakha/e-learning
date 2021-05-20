@@ -54,14 +54,22 @@ router.get(
 			parseInt(courseId),
 			userId
 		);
-		console.log(course.length);
 		if (course.length > 0) {
-			console.log("INSIDE IF");
 			res.status(200).json({ success: "Found" });
 		} else {
-			console.log("INSIDE ELSE");
 			res.status(404).json({ error: "Not Found" });
 		}
+	}
+);
+
+router.get(
+	"/my-courses",
+	verifyJwtToken,
+	async (req: Request, res: Response) => {
+		const userId: number = (req as any).user;
+		const studentService = Container.get(StudentService);
+		const courses = await studentService.getCurrentUserCourses(userId);
+		res.status(200).json({ courses });
 	}
 );
 

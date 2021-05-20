@@ -26,14 +26,8 @@ router.get("/:id/courses", async (req: Request, res: Response) => {
 });
 
 router.put("/:id", async (req: Request, res: Response) => {
-	const {
-		username,
-		about,
-		website,
-		github,
-		twitter,
-		youtube,
-	} = req.body as InstructorDto;
+	const { username, about, website, github, twitter, youtube } =
+		req.body as InstructorDto;
 	const instructorService = Container.get(InstructorService);
 	const data = await instructorService.update(parseInt(req.params.id), {
 		username,

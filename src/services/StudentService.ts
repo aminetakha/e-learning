@@ -51,4 +51,11 @@ export class StudentService {
 			`insert into carts_courses_courses(cartsId, coursesId) values (${cartId}, ${courseId})`
 		);
 	}
+
+	async getCurrentUserCourses(userId: number) {
+		const courses = await this.studentRepository.findOne(userId, {
+			relations: ["courses"],
+		});
+		return courses;
+	}
 }

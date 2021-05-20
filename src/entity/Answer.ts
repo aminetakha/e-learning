@@ -1,5 +1,4 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { File } from "./File";
 import { Instructor } from "./Instructor";
 import { Question } from "./Question";
 import { Student } from "./Student";
@@ -11,15 +10,6 @@ export class Answer {
 
 	@Column()
 	answer: string;
-
-	@ManyToOne(() => File, (file) => file.answers)
-	file: File;
-
-	@ManyToOne(() => Question, (question) => question.answers)
-	question: Question;
-
-	@ManyToOne(() => Question, (question) => question.answers)
-	question: Question;
 
 	@ManyToOne(() => Question, (question) => question.answers)
 	question: Question;

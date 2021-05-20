@@ -26,6 +26,14 @@ const auth = (state = initialState, action) => {
 				...state,
 				cart: state.cart + 1,
 			};
+		case "LOGOUT":
+			return {
+				...state,
+				isAuthenticated: false,
+				user: null,
+				cart: localStorage.getItem("cart"),
+				loading: true,
+			};
 		default:
 			return state;
 	}
