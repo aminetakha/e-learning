@@ -13,6 +13,9 @@ import { Section } from "../entity/Section";
 import { Student } from "../entity/Student";
 import { InstructorService } from "./InstructorService";
 import { StudentService } from "./StudentService";
+<<<<<<< HEAD
+>>>>>>> 28ca805... Added question and answers functionality
+=======
 >>>>>>> 28ca805... Added question and answers functionality
 
 @Service()
@@ -21,12 +24,18 @@ export class CourseService {
 	private courseRepository = getRepository(Course);
 	private instructorRepository = getRepository(Instructor);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	private reviewRepository = getRepository(Review);
 =======
+=======
+>>>>>>> 28ca805... Added question and answers functionality
 	private answerRepository = getRepository(Answer);
 	private sectionRepository = getRepository(Section);
 	private questionRepository = getRepository(Question);
 	private fileRepository = getRepository(File);
+<<<<<<< HEAD
+>>>>>>> 28ca805... Added question and answers functionality
+=======
 >>>>>>> 28ca805... Added question and answers functionality
 
 	async getCoursesByCategory(category: string) {
@@ -176,5 +185,8 @@ export class CourseService {
 		const addedAnswer = await this.answerRepository.save(a);
 		return addedAnswer;
 	}
+<<<<<<< HEAD
+>>>>>>> 28ca805... Added question and answers functionality
+=======
 >>>>>>> 28ca805... Added question and answers functionality
 }

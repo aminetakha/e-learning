@@ -18,6 +18,9 @@ export class Answer {
 	@ManyToOne(() => Question, (question) => question.answers)
 	question: Question;
 
+	@ManyToOne(() => Question, (question) => question.answers)
+	question: Question;
+
 	@ManyToOne(() => Student, (student) => student.answers)
 	student: Student[];
 

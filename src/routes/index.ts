@@ -9,6 +9,9 @@ import category from "./category";
 =======
 import logout from "./logout";
 import question from "./question";
+<<<<<<< HEAD
+>>>>>>> 28ca805... Added question and answers functionality
+=======
 >>>>>>> 28ca805... Added question and answers functionality
 
 const router = Router();
@@ -20,7 +23,10 @@ router.use("/instructors", instructors);
 router.use("/courses", course);
 router.use("/categories", category);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 28ca805... Added question and answers functionality
 router.use("/questions", question);
 router.use("/logout", logout);
 >>>>>>> 28ca805... Added question and answers functionality

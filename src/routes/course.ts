@@ -44,7 +44,10 @@ router.get("/:title", async (req: Request, res: Response) => {
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 28ca805... Added question and answers functionality
 router.get("/:title/files", async (req: Request, res: Response) => {
 	const courseService = Container.get(CourseService);
 	const { title } = req.params;

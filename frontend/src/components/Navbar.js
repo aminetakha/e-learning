@@ -140,6 +140,18 @@ const Navbar = ({ history }) => {
 								>
 									Log in
 								</Button>
+<<<<<<< HEAD
+=======
+							</div>
+						) : (
+							<>
+								<Button
+									color="secondary"
+									onClick={() => history.push("/login")}
+								>
+									Log in
+								</Button>
+>>>>>>> 28ca805... Added question and answers functionality
 								<Button color="secondary">Sign up</Button>
 							</>
 						)}
