@@ -151,6 +151,9 @@ const Navbar = ({ history }) => {
 								>
 									Log in
 								</Button>
+<<<<<<< HEAD
+>>>>>>> 28ca805... Added question and answers functionality
+=======
 >>>>>>> 28ca805... Added question and answers functionality
 								<Button color="secondary">Sign up</Button>
 							</>

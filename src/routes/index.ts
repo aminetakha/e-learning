@@ -10,6 +10,9 @@ import category from "./category";
 import logout from "./logout";
 import question from "./question";
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 28ca805... Added question and answers functionality
+=======
 >>>>>>> 28ca805... Added question and answers functionality
 =======
 >>>>>>> 28ca805... Added question and answers functionality
@@ -24,7 +27,10 @@ router.use("/courses", course);
 router.use("/categories", category);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 28ca805... Added question and answers functionality
 =======
 >>>>>>> 28ca805... Added question and answers functionality
 router.use("/questions", question);

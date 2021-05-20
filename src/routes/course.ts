@@ -45,7 +45,10 @@ router.get("/:title", async (req: Request, res: Response) => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 28ca805... Added question and answers functionality
 =======
 >>>>>>> 28ca805... Added question and answers functionality
 router.get("/:title/files", async (req: Request, res: Response) => {

@@ -14,6 +14,9 @@ import { Student } from "../entity/Student";
 import { InstructorService } from "./InstructorService";
 import { StudentService } from "./StudentService";
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 28ca805... Added question and answers functionality
+=======
 >>>>>>> 28ca805... Added question and answers functionality
 =======
 >>>>>>> 28ca805... Added question and answers functionality
@@ -25,8 +28,11 @@ export class CourseService {
 	private instructorRepository = getRepository(Instructor);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	private reviewRepository = getRepository(Review);
 =======
+=======
+>>>>>>> 28ca805... Added question and answers functionality
 =======
 >>>>>>> 28ca805... Added question and answers functionality
 	private answerRepository = getRepository(Answer);
@@ -34,6 +40,9 @@ export class CourseService {
 	private questionRepository = getRepository(Question);
 	private fileRepository = getRepository(File);
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 28ca805... Added question and answers functionality
+=======
 >>>>>>> 28ca805... Added question and answers functionality
 =======
 >>>>>>> 28ca805... Added question and answers functionality
@@ -186,6 +195,9 @@ export class CourseService {
 		return addedAnswer;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 28ca805... Added question and answers functionality
+=======
 >>>>>>> 28ca805... Added question and answers functionality
 =======
 >>>>>>> 28ca805... Added question and answers functionality
