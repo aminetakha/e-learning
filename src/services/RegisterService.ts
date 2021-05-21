@@ -2,6 +2,7 @@ import { Service } from "typedi";
 import { getRepository } from "typeorm";
 import { RegisterDto } from "../dto/registerDto";
 import { RegisterStudentDto } from "../dto/registerStudentDto";
+import { Cart } from "../entity/Cart";
 import { Instructor } from "../entity/Instructor";
 import { Student } from "../entity/Student";
 import hashPassword from "../util/hashPassword";
@@ -10,6 +11,8 @@ import hashPassword from "../util/hashPassword";
 export class RegisterService {
 	private instructorRepository = getRepository(Instructor);
 	private studentRepository = getRepository(Student);
+	private cartRepository = getRepository(Cart);
+
 	async registerUser(regiserDto: RegisterDto) {
 		let instructor = await this.instructorRepository.findOne({
 			email: regiserDto.email,
@@ -33,6 +36,9 @@ export class RegisterService {
 			registerStudentDto.password
 		);
 		student = await this.studentRepository.save(registerStudentDto);
+		const cart = new Cart();
+		cart.student = student;
+		await this.cartRepository.save(cart);
 		return { student };
 	}
 }

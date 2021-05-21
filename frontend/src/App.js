@@ -19,6 +19,7 @@ import axios from "axios";
 import ManageCourse from "./components/ManageCourse";
 import InstructorDashboard from "./components/InstructorDashboard";
 import CreateCourse from "./components/CreateCourse";
+import Register from "./components/Register";
 
 const App = () => {
 	const auth = useSelector((state) => state.auth);
@@ -65,6 +66,16 @@ const App = () => {
 					render={() =>
 						!auth.isAuthenticated ? (
 							<Route path="/login" component={Login} />
+						) : (
+							<Redirect to="/" />
+						)
+					}
+				/>
+				<Route
+					path="/register"
+					render={() =>
+						!auth.isAuthenticated ? (
+							<Route path="/register" component={Register} />
 						) : (
 							<Redirect to="/" />
 						)

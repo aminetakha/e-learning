@@ -14,7 +14,7 @@ router.post(
 	async (req: Request, res: Response) => {
 		const instructor: RegisterDto = {
 			...req.body,
-			photo: req.file.path,
+			photo: req.file.filename,
 		};
 		const registerService = Container.get(RegisterService);
 		const response = await registerService.registerUser(instructor);
@@ -33,7 +33,7 @@ router.post(
 	async (req: Request, res: Response) => {
 		const student: RegisterStudentDto = {
 			...req.body,
-			photo: req.file.path,
+			photo: req.file.filename,
 		};
 		const registerService = Container.get(RegisterService);
 		const response = await registerService.registerStudent(student);

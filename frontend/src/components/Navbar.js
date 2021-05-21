@@ -72,10 +72,20 @@ const Navbar = ({ history }) => {
 			) : (
 				<>
 					<MenuItem>
-						<Button color="primary">Log in</Button>
+						<Button
+							color="primary"
+							onClick={() => history.push("/login")}
+						>
+							Log in
+						</Button>
 					</MenuItem>
 					<MenuItem>
-						<Button color="secondary">Sign up</Button>
+						<Button
+							color="secondary"
+							onClick={() => history.push("/register")}
+						>
+							Sign up
+						</Button>
 					</MenuItem>
 				</>
 			)}
@@ -158,7 +168,12 @@ const Navbar = ({ history }) => {
 								>
 									Log in
 								</Button>
-								<Button color="secondary">Sign up</Button>
+								<Button
+									color="secondary"
+									onClick={() => history.push("/register")}
+								>
+									Sign up
+								</Button>
 							</>
 						)}
 					</div>
