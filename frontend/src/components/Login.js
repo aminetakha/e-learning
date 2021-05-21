@@ -29,7 +29,11 @@ const Login = (props) => {
 			.then((res) => {
 				const user = res.data.user;
 				user.type = res.data.type;
-				dispatch(login(res.data.user, res.data.cart));
+				const cart = user.type === "instructor" ? [] : res.data.cart;
+				dispatch(login(res.data.user, cart));
+				if (user.type === "instructor") {
+					return props.history.replace("/instructor/course");
+				}
 				props.history.replace("/");
 			})
 			.catch((err) => console.log(err));

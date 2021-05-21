@@ -20,6 +20,7 @@ import ManageCourse from "./components/ManageCourse";
 import InstructorDashboard from "./components/InstructorDashboard";
 import CreateCourse from "./components/CreateCourse";
 import Register from "./components/Register";
+import NavbarInstructor from "./components/NavbarInstructor";
 
 const App = () => {
 	const auth = useSelector((state) => state.auth);
@@ -32,7 +33,11 @@ const App = () => {
 
 	return (
 		<Router>
-			<Navbar />
+			{auth.user === null || auth.user.type === "student" ? (
+				<Navbar />
+			) : (
+				<NavbarInstructor />
+			)}
 			<Switch>
 				<Route exact path="/" component={HomeRoute} />
 				<Route path="/course/:id/manage" component={ManageCourse} />

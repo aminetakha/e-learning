@@ -37,7 +37,16 @@ export class LoginService {
 						],
 						relations: ["cart", "cart.courses"],
 				  })
-				: await this.instructorRepository.findOne({ email });
+				: await this.instructorRepository.findOne({
+						where: { email },
+						select: [
+							"email",
+							"password",
+							"id",
+							"username",
+							"photo",
+						],
+				  });
 
 		if (!user) {
 			return { error: "not found" };
@@ -54,10 +63,17 @@ export class LoginService {
 			username: user.username,
 			photo: user.photo,
 		};
+		if (userType === "student") {
+			return {
+				token,
+				user: currUser,
+				cart: (user as any).cart.courses.length,
+			};
+		}
+
 		return {
 			token,
 			user: currUser,
-			cart: (user as any).cart.courses.length,
 		};
 	}
 }

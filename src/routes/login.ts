@@ -21,7 +21,8 @@ router.post("/instructor", async (req: Request, res: Response) => {
 	if (typeof response !== "string" && "error" in response) {
 		return res.status(404).json({ message: response.error });
 	}
-	res.status(200).json({ token: response, type: "instructor" });
+	res.cookie("jwt", response.token, { httpOnly: true });
+	res.status(200).json({ user: response.user, type: "instructor" });
 });
 
 export default router;
