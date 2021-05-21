@@ -18,6 +18,8 @@ import Instructor from "./Instructor";
 import Review from "./Review";
 import InstructorCourses from "./InstructorCourses";
 import { addCourse } from "../actions/auth";
+import MyRating from "./MyRating";
+import Moment from "react-moment";
 
 const useStyles = makeStyles((theme) => ({
 	media: {
@@ -146,11 +148,24 @@ const CourseDetails = () => {
 								</Typography>
 								<Typography>{course.description}</Typography>
 								<Typography>
-									{`${rating} (${course.reviews.length} ratings)`}
+									<MyRating
+										rating={rating}
+										reviewsCount={course.reviews.length}
+									/>
 								</Typography>
-								<Typography>
-									{`Created At: ${course.createdAt}`}
-								</Typography>
+								<div
+									style={{
+										display: "flex",
+										alignItems: "center",
+									}}
+								>
+									<p style={{ marginRight: "5px" }}>
+										Created at:{" "}
+									</p>
+									<Moment format="DD-MM-YYYY">
+										{course.createdAt}
+									</Moment>
+								</div>
 							</CardContent>
 						</Grid>
 						<Grid item xs={4}>

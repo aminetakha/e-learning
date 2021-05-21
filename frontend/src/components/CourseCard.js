@@ -6,6 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
+import Moment from "react-moment";
 
 const useStyles = makeStyles({
 	root: {
@@ -66,9 +67,15 @@ const CourseCard = ({
 				<Typography variant="body2" color="textSecondary" component="p">
 					{description}
 				</Typography>
-				<Typography variant="body2" color="textSecondary" component="p">
-					{`Created At: ${createdAt}`}
-				</Typography>
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+					}}
+				>
+					<p style={{ marginRight: "5px" }}>Created at: </p>
+					<Moment format="DD-MM-YYYY">{createdAt}</Moment>
+				</div>
 			</CardContent>
 			<CardContent className={classes.price}>{`$${price}`}</CardContent>
 		</Card>
