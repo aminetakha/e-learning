@@ -17,7 +17,7 @@ export class InstructorService {
 
 	async findUserCourses(id: number) {
 		const data = await this.instructorRepository.findOne(id, {
-			relations: ["courses"],
+			relations: ["courses", "courses.reviews"],
 		});
 		return data;
 	}

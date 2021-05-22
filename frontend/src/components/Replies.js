@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Answers from "./Answers";
+import {
+	Container,
+	Button,
+	FormControl,
+	InputLabel,
+	Input,
+} from "@material-ui/core";
 
 const Replies = ({ answers, loading, showQuestions, addAnswer }) => {
 	const [answer, setAnswer] = useState("");
@@ -31,6 +38,7 @@ const Replies = ({ answers, loading, showQuestions, addAnswer }) => {
 				answer: msg.answer,
 			};
 			addAnswer(addedAnswer);
+			setAnswer("");
 		}
 	};
 
@@ -39,26 +47,47 @@ const Replies = ({ answers, loading, showQuestions, addAnswer }) => {
 			{loading ? (
 				<p>loading...</p>
 			) : (
-				<>
-					<button onClick={() => showQuestions()}>
+				<Container>
+					<Button variant="contained" onClick={() => showQuestions()}>
 						Back to questions
-					</button>
+					</Button>
 					<div>
-						<form onSubmit={submitAnswerHandler}>
-							<input
-								type="text"
-								placeholder="Give your answer"
-								value={answer}
-								onChange={answerChangeHandler}
-							/>
-							<button type="submit">Answer</button>
+						<form
+							onSubmit={submitAnswerHandler}
+							style={{
+								display: "flex",
+								alignItems: "center",
+								gap: "30px",
+								margin: "30px 0",
+							}}
+						>
+							<FormControl>
+								<InputLabel htmlFor="answer">
+									Give your answer...
+								</InputLabel>
+								<Input
+									id="answer"
+									name="answer"
+									type="text"
+									aria-describedby="answer-text"
+									value={answer}
+									onChange={answerChangeHandler}
+								/>
+							</FormControl>
+							<Button
+								variant="contained"
+								color="secondary"
+								type="submit"
+							>
+								Answer
+							</Button>
 						</form>
 					</div>
 					<Answers
 						answers={answers.answers}
 						length={answers.answers.length}
 					/>
-				</>
+				</Container>
 			)}
 		</>
 	);

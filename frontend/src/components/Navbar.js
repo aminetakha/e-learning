@@ -100,7 +100,12 @@ const Navbar = ({ history }) => {
 			<AppBar position="static">
 				<Toolbar className={classes.backColor}>
 					<Typography className={classes.title} variant="h6" noWrap>
-						OnlineClassroom
+						<Link
+							to="/"
+							style={{ textDecoration: "none", color: "crimson" }}
+						>
+							OnlineClassroom
+						</Link>
 					</Typography>
 					<div className={classes.search}>
 						<div className={classes.searchIcon}>
@@ -139,7 +144,12 @@ const Navbar = ({ history }) => {
 							>
 								<Link
 									to="/my-courses"
-									style={{ margin: "0px 10px" }}
+									style={{
+										margin: "0px 10px",
+										textDecoration: "none",
+										color: "grey",
+										fontWeight: "bold",
+									}}
 								>
 									View Courses
 								</Link>

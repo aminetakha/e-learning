@@ -17,7 +17,7 @@ const MyRating = ({ rating, reviewsCount }) => {
 					readOnly
 					precision={0.5}
 				/>
-				<p>{`(${reviewsCount} reviews)`}</p>
+				{reviewsCount && <p>{`(${reviewsCount} reviews)`}</p>}
 			</Box>
 		</div>
 	);

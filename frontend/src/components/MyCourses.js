@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { Container, Grid } from "@material-ui/core";
 
 const MyCourses = () => {
 	const [courses, setCourses] = useState([]);
@@ -20,58 +21,45 @@ const MyCourses = () => {
 		return <p>Loading ... </p>;
 	}
 
-	const styles = {
-		container: {
-			display: "grid",
-			gridTemplateColumns: "1fr 1fr 1fr 1fr",
-			gridGap: "15px",
-		},
-		course: {
-			width: "230px",
-			minHeight: "260px",
-			border: "1px solid black",
-			paddingBottom: "5px",
-		},
-		description: {
-			padding: "5px",
-		},
-		root: {
-			display: "flex",
-			justifyContent: "center",
-		},
-	};
-
 	return (
-		<div>
-			<h1>My Courses</h1>
-			<div style={styles.root}>
+		<Container>
+			<h1 style={{ margin: "30px 0" }}>My Courses</h1>
+			<div>
 				{courses.length === 0 ? (
-					<p>You're not enrolled in any courses</p>
+					<p style={{ marginTop: "30px", textAlign: "center" }}>
+						You're not enrolled in any courses
+					</p>
 				) : (
-					<div style={styles.container}>
+					<Grid container spacing={5}>
 						{courses.map((course) => (
-							<div key={course.id} style={styles.course}>
+							<Grid item sm={4} md={3} xs={12} key={course.id}>
 								<div>
 									<img
 										src={`/${course.thumbnail}`}
 										width="100%"
 									/>
 								</div>
-								<div style={styles.description}>
+								<div style={{ marginTop: "6px" }}>
 									<h3>{course.title}</h3>
-									<p>{course.description}</p>
 								</div>
-								<div style={styles.link}>
-									<Link to={`/learn/${course.title}`}>
+								<div style={{ marginTop: "12px" }}>
+									<Link
+										to={`/learn/${course.title}`}
+										style={{
+											textDecoration: "none",
+											color: "crimson",
+											fontWeight: "bold",
+										}}
+									>
 										Start course
 									</Link>
 								</div>
-							</div>
+							</Grid>
 						))}
-					</div>
+					</Grid>
 				)}
 			</div>
-		</div>
+		</Container>
 	);
 };
 

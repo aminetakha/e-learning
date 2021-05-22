@@ -4,6 +4,7 @@ import axios from "axios";
 import Content from "./Content";
 import QASection from "./QASection";
 import Replies from "./Replies";
+import { Grid } from "@material-ui/core";
 
 const CourseVideo = () => {
 	const [course, setCourse] = useState();
@@ -65,8 +66,8 @@ const CourseVideo = () => {
 				<p>loading...</p>
 			) : (
 				<>
-					<div style={{ display: "flex", height: "450px" }}>
-						<div style={{ flex: 3 }}>
+					<Grid container>
+						<Grid item lg={8} md={8} xs={12}>
 							<video
 								width="100%"
 								height="100%"
@@ -78,14 +79,14 @@ const CourseVideo = () => {
 									type="video/mp4"
 								/>
 							</video>
-						</div>
-						<div style={{ flex: 1, height: "100%" }}>
+						</Grid>
+						<Grid item lg={4} md={4} xs={12}>
 							<Content
 								course={course}
 								readFile={readFileHandler}
 							/>
-						</div>
-					</div>
+						</Grid>
+					</Grid>
 					<div style={{ marginTop: "30px" }}>
 						{!showRepliesSection ? (
 							<QASection

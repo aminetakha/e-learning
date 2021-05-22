@@ -4,10 +4,28 @@ const Answers = ({ answers, length }) => {
 	return (
 		<div>
 			{length === 0 ? (
-				<p>No answers for this question</p>
+				<p
+					style={{
+						margin: "30px 0",
+						textAlign: "center",
+						fontWeight: "bold",
+						fontSize: "23px",
+					}}
+				>
+					No answers for this question
+				</p>
 			) : (
 				answers.map((answer) => (
-					<div key={answer.id}>
+					<div
+						key={answer.id}
+						style={{
+							display: "flex",
+							gap: "30px",
+							alignItems: "center",
+							margin: "30px 0",
+							borderBottom: "1px solid #ccc",
+						}}
+					>
 						<div>
 							<img
 								src={

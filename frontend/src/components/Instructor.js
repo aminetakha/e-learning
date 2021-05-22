@@ -7,9 +7,14 @@ const Instructor = ({ instructor }) => {
 				<h3>{instructor.username}</h3>
 			</div>
 			<div>
-				<img src={`http://localhost:5000/${instructor.photo}`} />
+				<img
+					src={`http://localhost:5000/${instructor.photo}`}
+					width="170px"
+					height="170px"
+					style={{ borderRadius: "50%" }}
+				/>
 			</div>
-			<div>
+			<div style={{ marginTop: "30px" }}>
 				<p>{instructor.about}</p>
 			</div>
 		</div>

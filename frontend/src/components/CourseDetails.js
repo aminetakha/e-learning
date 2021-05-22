@@ -9,6 +9,7 @@ import {
 	Grid,
 	Typography,
 	makeStyles,
+	Container,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../actions/cart";
@@ -141,7 +142,7 @@ const CourseDetails = () => {
 			) : (
 				<>
 					<Grid container spacing={5} className={classes.root}>
-						<Grid item xs={8} className={classes.info}>
+						<Grid item xs={12} sm={6} className={classes.info}>
 							<CardContent>
 								<Typography variant="h4" component="h1">
 									{course.title}
@@ -168,8 +169,19 @@ const CourseDetails = () => {
 								</div>
 							</CardContent>
 						</Grid>
-						<Grid item xs={4}>
-							<Card className={classes.imageCard}>
+						<Grid
+							item
+							xs={12}
+							sm={6}
+							style={{
+								display: "flex",
+								justifyContent: "center",
+							}}
+						>
+							<Card
+								className={classes.imageCard}
+								style={{ width: "100%" }}
+							>
 								<CardMedia
 									className={classes.media}
 									image={`http://localhost:5000/${course.thumbnail}`}
@@ -201,23 +213,28 @@ const CourseDetails = () => {
 							</Card>
 						</Grid>
 					</Grid>
-					<Grid container className={classes.content}>
-						<Grid item xs={6}>
-							<Content course={course} />
+					<Container style={{ marginBottom: "80px" }}>
+						<Grid container className={classes.content} spacing={6}>
+							<Grid item lg={6} sm={6} xs={12}>
+								<Content course={course} />
+							</Grid>
+							<Grid item lg={6} sm={6} xs={12}>
+								<Instructor instructor={course.instructor} />
+							</Grid>
 						</Grid>
-						<Grid item xs={6}>
-							<Instructor instructor={course.instructor} />
+						<Grid container>
+							<Grid item xs={12}>
+								<Review reviews={course.reviews} />
+							</Grid>
 						</Grid>
-					</Grid>
-					<Grid container xs={12}>
-						<Review reviews={course.reviews} />
-					</Grid>
-					<Grid container xs={12}>
-						<InstructorCourses
-							instructorId={course.instructor.id}
-							limit={3}
-						/>
-					</Grid>
+						<Grid container xs={12}>
+							<InstructorCourses
+								instructorId={course.instructor.id}
+								instructorName={course.instructor.username}
+								limit={3}
+							/>
+						</Grid>
+					</Container>
 				</>
 			)}
 		</React.Fragment>

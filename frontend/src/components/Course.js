@@ -6,6 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
+import MyRating from "./MyRating";
 
 const useStyles = makeStyles({
 	root: {
@@ -20,7 +21,7 @@ const Course = ({ course }) => {
 	const { title, username, thumbnail, price, average_rating } = course;
 
 	return (
-		<Link to={`/courses/${title}`}>
+		<Link to={`/courses/${title}`} style={{ textDecoration: "none" }}>
 			<Card className={classes.root}>
 				<CardActionArea>
 					<CardMedia
@@ -46,7 +47,7 @@ const Course = ({ course }) => {
 							color="textSecondary"
 							component="p"
 						>
-							{average_rating}
+							<MyRating rating={average_rating} />
 						</Typography>
 						<Typography
 							variant="body2"

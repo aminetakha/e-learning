@@ -50,7 +50,11 @@ const UserCart = () => {
 	};
 
 	if (courses.length === 0) {
-		return <h1>Cart is empty</h1>;
+		return (
+			<h1 style={{ marginTop: "30px", textAlign: "center" }}>
+				Cart is empty
+			</h1>
+		);
 	}
 
 	const handleClick = async (event) => {};

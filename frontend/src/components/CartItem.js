@@ -27,7 +27,12 @@ const CartItem = ({ item, remove }) => {
 					<b>{item.title}</b>
 				</p>
 				<p
-					style={{ marginLeft: "40px" }}
+					style={{
+						marginLeft: "40px",
+						color: "crimson",
+						cursor: "pointer",
+						fontWeight: "bold",
+					}}
 					onClick={() => removeItemHandler(item.id)}
 				>
 					Remove
