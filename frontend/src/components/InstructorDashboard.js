@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button/Button";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Container } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	search: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 		marginRight: theme.spacing(2),
 		marginLeft: 0,
-		width: "100%",
+		width: "300px",
 		// [theme.breakpoints.up("sm")]: {
 		// 	marginLeft: theme.spacing(3),
 		// 	width: "auto",
@@ -71,54 +72,94 @@ const InstructorDashboard = (props) => {
 	}, []);
 
 	return (
-		<div>
+		<Container style={{ marginTop: "50px" }}>
 			<div>
-				<h2>Courses</h2>
 				<div>
-					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-							<SearchIcon />
+					<h2>Courses</h2>
+					<div
+						style={{
+							margin: "30px 0",
+							display: "flex",
+						}}
+					>
+						<div className={classes.search}>
+							<div className={classes.searchIcon}>
+								<SearchIcon />
+							</div>
+							<InputBase
+								placeholder="Search…"
+								classes={{
+									root: classes.inputRoot,
+									input: classes.inputInput,
+								}}
+								inputProps={{ "aria-label": "search" }}
+							/>
 						</div>
-						<InputBase
-							placeholder="Search…"
-							classes={{
-								root: classes.inputRoot,
-								input: classes.inputInput,
-							}}
-							inputProps={{ "aria-label": "search" }}
-						/>
-					</div>
-					<div>
-						<Link to="/course/create">
-							<Button variant="contained" color="secondary">
-								New course
-							</Button>
-						</Link>
+						<div>
+							<Link to="/course/create">
+								<Button variant="contained" color="secondary">
+									New course
+								</Button>
+							</Link>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div>
-				{loading ? (
-					<p>loading...</p>
-				) : courses.length === 0 ? (
-					<h1>You don't have any courses! Go ahead and make one</h1>
-				) : (
-					courses.map((course) => (
-						<div key={course.key}>
-							<div>
-								<img src={`/${course.thumbnail}`} />
+				<div>
+					{loading ? (
+						<p>loading...</p>
+					) : courses.length === 0 ? (
+						<h1>
+							You don't have any courses! Go ahead and make one
+						</h1>
+					) : (
+						courses.map((course) => (
+							<div
+								key={course.key}
+								style={{
+									margin: "20px 0",
+									display: "flex",
+									alignItems: "center",
+									border: "1px solid #ccc",
+									boxShadow:
+										"2px 2px 10px 0px rgba(0,0,0,0.22)",
+								}}
+							>
+								<div
+									style={{
+										marginRight: "30px",
+										display: "flex",
+										alignItems: "center",
+										flex: 2,
+									}}
+								>
+									<div>
+										<img
+											src={`/${course.thumbnail}`}
+											width="250px"
+										/>
+									</div>
+									<div style={{ marginLeft: "30px" }}>
+										<p>{course.title}</p>
+									</div>
+								</div>
+
+								<div style={{ flex: 3 }}>
+									<Link
+										to={`/course/${course.id}/manage`}
+										style={{
+											textDecoration: "none",
+											color: "crimson",
+										}}
+									>
+										Add New Sections
+									</Link>
+								</div>
 							</div>
-							<div>
-								<p>{course.title}</p>
-								<Link to={`/course/${course.id}/manage`}>
-									Add New Sections
-								</Link>
-							</div>
-						</div>
-					))
-				)}
+						))
+					)}
+				</div>
 			</div>
-		</div>
+		</Container>
 	);
 };
 

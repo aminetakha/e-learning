@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Course from "./Course";
+import { Container } from "@material-ui/core";
 
 const Popular = () => {
 	const [courses, setCourses] = useState([]);
@@ -19,16 +20,18 @@ const Popular = () => {
 		overflowX: "scroll",
 	};
 	return (
-		<div>
-			<div>
-				<h1>Popular courses</h1>
-			</div>
-			<div style={styles}>
-				{courses.length > 0 &&
-					courses.map((course) => (
-						<Course course={course} key={course.id} />
-					))}
-			</div>
+		<div style={{ margin: "30px 0" }}>
+			<Container>
+				<div>
+					<h1>Popular courses</h1>
+				</div>
+				<div style={styles}>
+					{courses.length > 0 &&
+						courses.map((course) => (
+							<Course course={course} key={course.id} />
+						))}
+				</div>
+			</Container>
 		</div>
 	);
 };

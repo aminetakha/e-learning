@@ -9,8 +9,8 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
 	root: {
-		maxWidth: 300,
-		padding: "20px",
+		width: 300,
+		margin: "20px",
 	},
 });
 

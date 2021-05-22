@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import File from "./File";
+import { Button, FormControl, Input, InputLabel } from "@material-ui/core";
 
 const Section = ({ courseId }) => {
 	const [sectionName, setSectionName] = useState("");
@@ -24,7 +25,10 @@ const Section = ({ courseId }) => {
 				.patch(`/courses/${createdSectionId}/section`, {
 					title: sectionName,
 				})
-				.then((res) => alert(res.data.success))
+				.then((res) => {
+					setFiles([]);
+					alert(res.data.success);
+				})
 				.catch((err) => alert(err));
 		} else {
 			axios
@@ -44,25 +48,41 @@ const Section = ({ courseId }) => {
 						style={{
 							display: "flex",
 							alignItems: "center",
-							gap: "10px",
+							gap: "70px",
+							marginBottom: "25px",
 						}}
 					>
 						<h3>{sectionName}</h3>
 						<div>
-							<button onClick={updateHandler}>Update</button>
+							<Button onClick={updateHandler}>
+								Update section name
+							</Button>
 						</div>
 					</div>
 				) : (
-					<div>
-						<input
-							type="text"
-							value={sectionName}
-							onChange={changeHandler}
-						/>
+					<div
+						style={{
+							display: "flex",
+							alignItems: "center",
+						}}
+					>
+						<FormControl>
+							<InputLabel htmlFor="section">
+								Section Name
+							</InputLabel>
+							<Input
+								id="section"
+								name="section"
+								type="section"
+								aria-describedby="section-text"
+								value={sectionName}
+								onChange={changeHandler}
+							/>
+						</FormControl>
 						{sectionName && (
-							<button onClick={addedHandler}>
+							<Button onClick={addedHandler}>
 								{update ? "Save update" : "Add Section"}
-							</button>
+							</Button>
 						)}
 					</div>
 				)}
@@ -73,10 +93,14 @@ const Section = ({ courseId }) => {
 								<File sectionId={createdSectionId} />
 							</div>
 						))}
-						<div>
-							<button onClick={() => setFiles([...Files, File])}>
+						<div style={{ marginTop: "20px" }}>
+							<Button
+								variant="contained"
+								color="secondary"
+								onClick={() => setFiles([...Files, File])}
+							>
 								Add new File
-							</button>
+							</Button>
 						</div>
 					</div>
 				)}

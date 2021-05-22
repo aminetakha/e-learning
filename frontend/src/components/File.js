@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Button } from "@material-ui/core";
+import CircularProgressWithLabel from "./UI/CircularProgressWithLabel";
 
 const File = ({ sectionId }) => {
 	const [file, setFile] = useState("");
@@ -12,7 +14,6 @@ const File = ({ sectionId }) => {
 
 	const addFileHandler = (e) => {
 		e.preventDefault();
-		// send file using axios
 		const formData = new FormData();
 		formData.append("file", file);
 		axios
@@ -30,14 +31,24 @@ const File = ({ sectionId }) => {
 
 	return (
 		<div>
-			<form encType="multipart/form-data">
-				<input type="file" name="file" onChange={changeFileHandler} />
+			<form
+				encType="multipart/form-data"
+				style={{ display: "flex", alignItems: "center" }}
+			>
+				<input
+					id="file"
+					type="file"
+					name="file"
+					onChange={changeFileHandler}
+				/>
 				{!uploaded && (
-					<button type="submit" onClick={addFileHandler}>
+					<Button type="submit" onClick={addFileHandler}>
 						Add File
-					</button>
+					</Button>
 				)}
-				{progress !== 0 && <span>{`${progress}%`}</span>}
+				{progress !== 0 && (
+					<CircularProgressWithLabel value={progress} />
+				)}
 			</form>
 		</div>
 	);

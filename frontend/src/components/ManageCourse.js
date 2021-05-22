@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Section from "./Section";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Container, Button } from "@material-ui/core";
 
 const ManageCourse = (props) => {
 	const { id } = useParams();
@@ -12,11 +13,15 @@ const ManageCourse = (props) => {
 		props.history.replace("/");
 	}
 	return (
-		<>
+		<Container style={{ margin: "50px 0" }}>
 			<div>
 				{Sections.map((Sec, index) => (
 					<div
-						style={{ margin: "30px", border: "1px solid black" }}
+						style={{
+							marginBottom: "20px",
+							border: "1px solid #ccc",
+							padding: "50px",
+						}}
 						key={index}
 					>
 						<Sec courseId={id} />
@@ -24,11 +29,15 @@ const ManageCourse = (props) => {
 				))}
 			</div>
 			<div>
-				<button onClick={() => setSections([...Sections, Section])}>
+				<Button
+					variant="contained"
+					color="secondary"
+					onClick={() => setSections([...Sections, Section])}
+				>
 					Add a new section
-				</button>
+				</Button>
 			</div>
-		</>
+		</Container>
 	);
 };
 
