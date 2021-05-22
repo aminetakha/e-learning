@@ -4,6 +4,7 @@ import axios from "axios";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import CourseCard from "../components/CourseCard";
+import Spinner from "../components/UI/Spinner";
 
 const CategoryCoursesRoute = () => {
 	const [courses, setCourses] = useState([]);
@@ -23,19 +24,21 @@ const CategoryCoursesRoute = () => {
 				variant="h4"
 			>{`${category} courses`}</Typography>
 
-			{courses.length === 0
-				? "Loading..."
-				: courses.map((course) => (
-						<CourseCard
-							key={course.id}
-							title={course.title}
-							description={course.description}
-							content={course.content}
-							price={course.price}
-							thumbnail={course.thumbnail}
-							createdAt={course.createdAt}
-						/>
-				  ))}
+			{courses.length === 0 ? (
+				<Spinner />
+			) : (
+				courses.map((course) => (
+					<CourseCard
+						key={course.id}
+						title={course.title}
+						description={course.description}
+						content={course.content}
+						price={course.price}
+						thumbnail={course.thumbnail}
+						createdAt={course.createdAt}
+					/>
+				))
+			)}
 		</Container>
 	);
 };

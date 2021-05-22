@@ -21,6 +21,7 @@ import InstructorCourses from "./InstructorCourses";
 import { addCourse } from "../actions/auth";
 import MyRating from "./MyRating";
 import Moment from "react-moment";
+import Spinner from "./UI/Spinner";
 
 const useStyles = makeStyles((theme) => ({
 	media: {
@@ -138,7 +139,7 @@ const CourseDetails = () => {
 	return (
 		<React.Fragment>
 			{course === null ? (
-				"loading"
+				<Spinner />
 			) : (
 				<>
 					<Grid container spacing={5} className={classes.root}>

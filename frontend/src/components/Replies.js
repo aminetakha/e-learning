@@ -9,6 +9,7 @@ import {
 	InputLabel,
 	Input,
 } from "@material-ui/core";
+import Spinner from "./UI/Spinner";
 
 const Replies = ({ answers, loading, showQuestions, addAnswer }) => {
 	const [answer, setAnswer] = useState("");
@@ -45,7 +46,7 @@ const Replies = ({ answers, loading, showQuestions, addAnswer }) => {
 	return (
 		<>
 			{loading ? (
-				<p>loading...</p>
+				<Spinner />
 			) : (
 				<Container>
 					<Button variant="contained" onClick={() => showQuestions()}>

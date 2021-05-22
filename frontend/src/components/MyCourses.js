@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Grid } from "@material-ui/core";
+import Spinner from "./UI/Spinner";
 
 const MyCourses = () => {
 	const [courses, setCourses] = useState([]);
@@ -18,7 +19,7 @@ const MyCourses = () => {
 	}, []);
 
 	if (loading) {
-		return <p>Loading ... </p>;
+		return <Spinner />;
 	}
 
 	return (

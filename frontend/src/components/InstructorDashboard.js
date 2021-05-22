@@ -7,6 +7,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Container } from "@material-ui/core";
+import Spinner from "./UI/Spinner";
 
 const useStyles = makeStyles((theme) => ({
 	search: {
@@ -106,7 +107,7 @@ const InstructorDashboard = (props) => {
 				</div>
 				<div>
 					{loading ? (
-						<p>loading...</p>
+						<Spinner />
 					) : courses.length === 0 ? (
 						<h1>
 							You don't have any courses! Go ahead and make one

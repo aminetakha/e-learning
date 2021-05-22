@@ -5,6 +5,7 @@ import Content from "./Content";
 import QASection from "./QASection";
 import Replies from "./Replies";
 import { Grid } from "@material-ui/core";
+import Spinner from "./UI/Spinner";
 
 const CourseVideo = () => {
 	const [course, setCourse] = useState();
@@ -63,7 +64,7 @@ const CourseVideo = () => {
 	return (
 		<>
 			{loading ? (
-				<p>loading...</p>
+				<Spinner />
 			) : (
 				<>
 					<Grid container>

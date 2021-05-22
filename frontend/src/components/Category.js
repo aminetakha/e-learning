@@ -3,6 +3,7 @@ import axios from "axios";
 import Grid from "@material-ui/core/Grid";
 import Card from "./Card";
 import { Container, makeStyles, Typography } from "@material-ui/core";
+import Spinner from "./UI/Spinner";
 
 const useStyles = makeStyles({
 	heading: {
@@ -26,7 +27,7 @@ const Category = () => {
 	return (
 		<div>
 			{categories.length === 0 ? (
-				<p>Loading ...</p>
+				<Spinner />
 			) : (
 				<Container>
 					<Typography
