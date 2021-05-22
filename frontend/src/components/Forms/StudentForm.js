@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { FormControl, InputLabel, Input } from "@material-ui/core";
+import {
+	FormControl,
+	InputLabel,
+	Input,
+	Grid,
+	Button,
+} from "@material-ui/core";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 
@@ -50,86 +56,106 @@ const StudentForm = (props) => {
 
 	return (
 		<div>
-			<form onSubmit={onSubmitHandler} encType="multipart/form-data">
-				<div>
-					<FormControl>
-						<InputLabel htmlFor="username">username</InputLabel>
-						<Input
-							id="username"
-							name="username"
-							aria-describedby="username-text"
-							value={studentData.username}
-							onChange={onChangeHandler}
-						/>
-					</FormControl>
-				</div>
-				<div>
-					<FormControl>
-						<InputLabel htmlFor="email">email</InputLabel>
-						<Input
-							id="email"
-							name="email"
-							aria-describedby="email-text"
-							value={studentData.email}
-							onChange={onChangeHandler}
-						/>
-					</FormControl>
-				</div>
-				<div>
-					<FormControl>
-						<InputLabel htmlFor="password">Password</InputLabel>
-						<Input
-							id="password"
-							name="password"
-							type="password"
-							aria-describedby="password-text"
-							value={studentData.password}
-							onChange={onChangeHandler}
-						/>
-					</FormControl>
-				</div>
-
-				<div>
-					<FormControl>
-						<InputLabel htmlFor="cpassword">
-							Confirm Password
-						</InputLabel>
-						<Input
-							id="cpassword"
-							name="cpassword"
-							type="password"
-							aria-describedby="cpassword-text"
-							value={studentData.cpassword}
-							onChange={onChangeHandler}
-						/>
-					</FormControl>
-				</div>
-				<div>
-					<FormControl>
-						<InputLabel htmlFor="country">Country</InputLabel>
-						<Input
-							id="country"
-							name="country"
-							aria-describedby="country-text"
-							value={studentData.country}
-							onChange={onChangeHandler}
-						/>
-					</FormControl>
-				</div>
-				<div>
-					<FormControl>
-						Upload Image
-						<input
-							type="file"
-							name="photo"
-							onChange={onFileChangeHandler}
-						/>
-					</FormControl>
-				</div>
-				<div>
-					<button type="submit">Create Account</button>
-				</div>
-			</form>
+			<Grid
+				container
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					marginBottom: "50px",
+				}}
+			>
+				<Grid md={6} xs={12}>
+					<form
+						onSubmit={onSubmitHandler}
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+						}}
+					>
+						<FormControl style={{ width: "70%", margin: "30px 0" }}>
+							<InputLabel htmlFor="username">Username</InputLabel>
+							<Input
+								id="username"
+								name="username"
+								aria-describedby="username-text"
+								value={studentData.username}
+								onChange={onChangeHandler}
+							/>
+						</FormControl>
+						<FormControl
+							style={{ width: "70%", marginBottom: "30px" }}
+						>
+							<InputLabel htmlFor="email">email</InputLabel>
+							<Input
+								id="email"
+								name="email"
+								aria-describedby="email-text"
+								value={studentData.email}
+								onChange={onChangeHandler}
+							/>
+						</FormControl>
+						<FormControl
+							style={{ width: "70%", marginBottom: "30px" }}
+						>
+							<InputLabel htmlFor="password">password</InputLabel>
+							<Input
+								id="password"
+								name="password"
+								type="password"
+								aria-describedby="password-text"
+								value={studentData.password}
+								onChange={onChangeHandler}
+							/>
+						</FormControl>
+						<FormControl
+							style={{ width: "70%", marginBottom: "30px" }}
+						>
+							<InputLabel htmlFor="cpassword">
+								Confirm password
+							</InputLabel>
+							<Input
+								id="cpassword"
+								name="cpassword"
+								type="cpassword"
+								aria-describedby="cpassword-text"
+								value={studentData.cpassword}
+								onChange={onChangeHandler}
+							/>
+						</FormControl>
+						<FormControl
+							style={{ width: "70%", marginBottom: "30px" }}
+						>
+							<InputLabel htmlFor="country">Country</InputLabel>
+							<Input
+								id="country"
+								name="country"
+								type="country"
+								aria-describedby="country-text"
+								value={studentData.country}
+								onChange={onChangeHandler}
+							/>
+						</FormControl>
+						<div>
+							<label htmlFor="photo">Upload Image</label>
+							<input
+								type="file"
+								name="photo"
+								id="photo"
+								onChange={onFileChangeHandler}
+							/>
+						</div>
+						<Button
+							type="submit"
+							variant="contained"
+							color="secondary"
+							style={{ width: "40%" }}
+						>
+							Create Account
+						</Button>
+					</form>
+				</Grid>
+			</Grid>
 		</div>
 	);
 };
