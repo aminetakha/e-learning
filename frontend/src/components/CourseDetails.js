@@ -22,6 +22,7 @@ import { addCourse } from "../actions/auth";
 import MyRating from "./MyRating";
 import Moment from "react-moment";
 import Spinner from "./UI/Spinner";
+import Feedback from "./Feedback";
 
 const useStyles = makeStyles((theme) => ({
 	media: {
@@ -228,6 +229,13 @@ const CourseDetails = () => {
 								<Review reviews={course.reviews} />
 							</Grid>
 						</Grid>
+						{auth.isAuthenticated && (
+							<Grid container>
+								<Grid item xs={12}>
+									<Feedback courseId={course.id} />
+								</Grid>
+							</Grid>
+						)}
 						<Grid container xs={12}>
 							<InstructorCourses
 								instructorId={course.instructor.id}
