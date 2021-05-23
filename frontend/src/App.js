@@ -21,6 +21,7 @@ import InstructorDashboard from "./components/InstructorDashboard";
 import CreateCourse from "./components/CreateCourse";
 import Register from "./components/Register";
 import NavbarInstructor from "./components/NavbarInstructor";
+import Footer from "./components/Footer";
 
 const App = () => {
 	const auth = useSelector((state) => state.auth);
@@ -103,6 +104,7 @@ const App = () => {
 				<Route path="/learn/:title" component={CourseVideo} />
 				<Route path="/courses/:title" component={CourseDetails} />
 			</Switch>
+			<Footer />
 		</Router>
 	);
 };
