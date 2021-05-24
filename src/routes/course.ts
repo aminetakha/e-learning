@@ -4,6 +4,7 @@ import Container from "typedi";
 import { CourseService } from "../services/CourseService";
 import { FileService } from "../services/FileService";
 import { uploadUserImage } from "../util/uploadUserImage";
+import verifyJwtToken from "../util/verifyJwtToken";
 const router = Router();
 const upload = uploadUserImage();
 
@@ -16,10 +17,12 @@ router.get("/category/:category", async (req: Request, res: Response) => {
 
 router.post(
 	"/create",
+	verifyJwtToken,
 	upload.single("file"),
 	async (req: Request, res: Response) => {
 		const data = req.body;
-		data.instructor = 1;
+		const userId: number = (req as any).user;
+		data.instructor = userId;
 		data.thumbnail = req.file.filename;
 		const courseService = Container.get(CourseService);
 		const course = await courseService.createCourse(data);
@@ -96,10 +99,12 @@ router.post(
 	async (req: Request, res: Response) => {
 		const fileService = Container.get(FileService);
 		const { id } = req.params;
+		const title: string = req.body.name;
 		const filename = req.file.filename;
 		const file = await fileService.uploadFileForSection(
 			parseInt(id),
-			filename
+			filename,
+			title
 		);
 		res.json({ msg: file });
 	}

@@ -73,12 +73,9 @@ const CourseVideo = () => {
 								width="100%"
 								height="100%"
 								controls
-								key={`/${filename}.mp4`}
+								key={`/${filename}`}
 							>
-								<source
-									src={`/${filename}.mp4`}
-									type="video/mp4"
-								/>
+								<source src={`/${filename}`} type="video/mp4" />
 							</video>
 						</Grid>
 						<Grid item lg={4} md={4} xs={12}>

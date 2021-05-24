@@ -74,7 +74,7 @@ const Content = ({ course, readFile }) => {
 								<React.Fragment key={file.id}>
 									<ListItem button className={classes.nested}>
 										<ListItemText
-											primary={file.name}
+											primary={file.title}
 											onClick={() =>
 												readFile(
 													file.name,

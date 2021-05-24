@@ -16,6 +16,9 @@ export class File {
 	id: number;
 
 	@Column()
+	title: string;
+
+	@Column()
 	name: string;
 
 	@ManyToOne(() => Course, (course) => course.files)

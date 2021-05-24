@@ -58,4 +58,14 @@ export class StudentService {
 		});
 		return courses;
 	}
+
+	async verifyCourseEnrollment(studentId: number, courseId: number) {
+		const courseCount = await this.studentRepository
+			.createQueryBuilder("student")
+			.leftJoin("student.courses", "course")
+			.where("(student.id = :studentId AND course.id = :courseId)")
+			.setParameters({ studentId, courseId })
+			.getCount();
+		return courseCount;
+	}
 }

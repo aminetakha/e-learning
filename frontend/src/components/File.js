@@ -5,17 +5,20 @@ import CircularProgressWithLabel from "./UI/CircularProgressWithLabel";
 
 const File = ({ sectionId }) => {
 	const [file, setFile] = useState("");
+	const [name, setName] = useState("");
 	const [progress, setProgress] = useState(0);
 	const [uploaded, setUploaded] = useState(false);
 
 	const changeFileHandler = (e) => {
 		setFile(e.target.files[0]);
+		setName(e.target.files[0].name);
 	};
 
 	const addFileHandler = (e) => {
 		e.preventDefault();
 		const formData = new FormData();
 		formData.append("file", file);
+		formData.append("name", name);
 		axios
 			.post(`/courses/${sectionId}/file`, formData, {
 				onUploadProgress: (e) => {

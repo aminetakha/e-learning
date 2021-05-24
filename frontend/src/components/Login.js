@@ -42,7 +42,7 @@ const Login = (props) => {
 				}
 				props.history.replace("/");
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => alert("Wrong Credentials"));
 	};
 
 	return (

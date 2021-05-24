@@ -73,4 +73,19 @@ router.get(
 	}
 );
 
+router.get(
+	"/verify/:courseId",
+	verifyJwtToken,
+	async (req: Request, res: Response) => {
+		const userId: number = (req as any).user;
+		const { courseId } = req.params;
+		const studentService = Container.get(StudentService);
+		const count = await studentService.verifyCourseEnrollment(
+			userId,
+			parseInt(courseId)
+		);
+		res.json({ count });
+	}
+);
+
 export default router;

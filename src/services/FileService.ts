@@ -15,12 +15,17 @@ export class FileService {
 		return section;
 	}
 
-	async uploadFileForSection(sectionId: number, filename: string) {
+	async uploadFileForSection(
+		sectionId: number,
+		filename: string,
+		title: string
+	) {
 		const section = await this.findSectionById(sectionId);
 		const course = section.course;
 		const file = new File();
 		file.name = filename;
 		file.section = section;
+		file.title = title.slice(0, title.lastIndexOf("."));
 		file.course = course;
 		const created = this.fileRepository.save(file);
 		return created;

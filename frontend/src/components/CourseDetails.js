@@ -55,6 +55,7 @@ const CourseDetails = () => {
 	const [course, setCourse] = useState(null);
 	const [rating, setRating] = useState(0);
 	const [courseAdded, setCourseAdded] = useState(false);
+	const [enrolled, setEnrolled] = useState(false);
 	const [content, setContent] = useState([]);
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -81,23 +82,34 @@ const CourseDetails = () => {
 				if (auth.isAuthenticated) {
 					const courseId = res.data.id;
 					axios
-						.get(
-							"http://localhost:5000/students/cart/course/" +
-								courseId,
-							{ withCredentials: true }
-						)
-						.then((res) => {
-							if ("success" in res.data) {
-								found = true;
-							} else {
-								found = false;
-							}
-							setCourseAdded(found);
+						.get("/students/verify/" + courseId, {
+							withCredentials: true,
 						})
-						.catch((err) => {
-							found = false;
-							setCourseAdded(found);
-						});
+						.then((res) => {
+							if (res.data.count === 0) {
+								axios
+									.get(
+										"http://localhost:5000/students/cart/course/" +
+											courseId,
+										{ withCredentials: true }
+									)
+									.then((res) => {
+										if ("success" in res.data) {
+											found = true;
+										} else {
+											found = false;
+										}
+										setCourseAdded(found);
+									})
+									.catch((err) => {
+										found = false;
+										setCourseAdded(found);
+									});
+							} else {
+								setEnrolled(true);
+							}
+						})
+						.catch((err) => console.log(err));
 				} else {
 					found = cart.items.find((item) => item.id === res.data.id);
 				}
@@ -190,27 +202,34 @@ const CourseDetails = () => {
 									title="Course"
 								/>
 								<CardContent className={classes.actions}>
-									{courseAdded ? (
+									{enrolled ? (
+										<Button>Go to course</Button>
+									) : courseAdded ? (
 										<Link
 											to="/cart"
 											style={{ textDecoration: "none" }}
 										>
 											<Button>Go To Cart</Button>
+											<Button>Buy Now</Button>
 										</Link>
 									) : (
-										<Button
-											onClick={() =>
-												auth.isAuthenticated
-													? addToStudentCartHandler(
-															course
-													  )
-													: addToCartHandler(course)
-											}
-										>
-											Add To Cart
-										</Button>
+										<>
+											<Button
+												onClick={() =>
+													auth.isAuthenticated
+														? addToStudentCartHandler(
+																course
+														  )
+														: addToCartHandler(
+																course
+														  )
+												}
+											>
+												Add To Cart
+											</Button>
+											<Button>Buy Now</Button>
+										</>
 									)}
-									<Button>Buy Now</Button>
 								</CardContent>
 							</Card>
 						</Grid>
@@ -229,7 +248,7 @@ const CourseDetails = () => {
 								<Review reviews={course.reviews} />
 							</Grid>
 						</Grid>
-						{auth.isAuthenticated && (
+						{auth.isAuthenticated && enrolled && (
 							<Grid container>
 								<Grid item xs={12}>
 									<Feedback courseId={course.id} />
