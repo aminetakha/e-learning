@@ -1,5 +1,4 @@
 import { Request, Response, Router } from "express";
-import { readdirSync } from "fs";
 import Container from "typedi";
 import { CourseService } from "../services/CourseService";
 import { FileService } from "../services/FileService";
@@ -109,5 +108,12 @@ router.post(
 		res.json({ msg: file });
 	}
 );
+
+router.get("/:id/stats", async (req: Request, res: Response) => {
+	const { id } = req.params;
+	const courseService = Container.get(CourseService);
+	const course = await courseService.getCourseStats(parseInt(id));
+	res.json({ course });
+});
 
 export default router;

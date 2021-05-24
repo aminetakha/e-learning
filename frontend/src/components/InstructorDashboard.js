@@ -154,6 +154,15 @@ const InstructorDashboard = (props) => {
 									>
 										Add New Sections
 									</Link>
+									<Link
+										to={`/course/${course.id}/stats`}
+										style={{
+											textDecoration: "none",
+											color: "crimson",
+										}}
+									>
+										View Course Statistics
+									</Link>
 								</div>
 							</div>
 						))

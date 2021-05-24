@@ -189,4 +189,20 @@ export class CourseService {
 		const addedAnswer = await this.answerRepository.save(a);
 		return addedAnswer;
 	}
+
+	async getCourseStats(courseId: number) {
+		const course = await getManager().query(
+			`select c.price, count(*) as count, c.price * count(*) as total from students_courses_courses s, courses c where s.coursesId=${courseId} and c.id=${courseId}`
+		);
+		const reviews = await getManager().query(
+			`select r.review, r.rating, s.photo from reviews r, students s where r.courseId=${courseId} and r.studentId = s.id`
+		);
+		let sum = 0;
+
+		reviews.forEach((review) => {
+			sum += review.rating;
+		});
+		const data = { course, reviews, avg: sum / reviews.length };
+		return data;
+	}
 }

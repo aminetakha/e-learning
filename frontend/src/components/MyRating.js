@@ -7,7 +7,6 @@ const MyRating = ({ rating, reviewsCount }) => {
 		<div>
 			<Box
 				component="fieldset"
-				mb={3}
 				borderColor="transparent"
 				style={{ display: "flex", alignItems: "center" }}
 			>
