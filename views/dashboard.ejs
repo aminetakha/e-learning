@@ -8,7 +8,7 @@
 
 		<style>
 			.container {
-				padding: 50px 30px;
+				padding: 20px 30px;
 			}
 			.stats {
 				display: flex;
@@ -44,11 +44,22 @@
 			.table-container {
 				margin-top: 60px;
 			}
+			.logout {
+				margin-bottom: 30px;
+			}
+			.logout a {
+				text-decoration: none;
+				color: crimson;
+				font-weight: bold;
+				font-size: 20px;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="container">
-			<div>Logout button</div>
+			<div class="logout">
+				<a href="/logout">Logout</a>
+			</div>
 			<div class="stats">
 				<div>
 					<h1>Total Earning</h1>
@@ -136,5 +147,13 @@
 				</div>
 			</div>
 		</div>
+
+		<script>
+			const logout = document.querySelector(".logout");
+			logout.addEventListener("click", (e) => {
+				console.log("clicked");
+				fetch("/logout");
+			});
+		</script>
 	</body>
 </html>

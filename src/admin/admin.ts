@@ -1,7 +1,8 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import adminRoute from "../routes/admin";
 const admin = express();
 
+admin.use(express.json());
 admin.set("view engine", "ejs");
 
 admin.use("/", adminRoute);

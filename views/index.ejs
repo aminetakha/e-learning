@@ -5,9 +5,40 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>OnlineClassroom - Admin</title>
+		<style>
+			body {
+				margin: 0;
+				box-sizing: border-box;
+			}
+			.container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				text-align: center;
+			}
+			form {
+				width: 70%;
+			}
+			form div {
+				width: 100%;
+				margin: 30px 0;
+			}
+			form input {
+				width: 100%;
+				padding: 10px 16px;
+				box-sizing: border-box;
+			}
+			form button {
+				width: 60%;
+				padding: 10px;
+				font-size: 15px;
+				cursor: pointer;
+			}
+		</style>
 	</head>
 	<body>
-		<div>
+		<div class="container">
 			<form method="POST" id="form">
 				<h1>Admin</h1>
 				<div>
@@ -40,9 +71,16 @@
 				const res = await fetch("/login", {
 					method: "POST",
 					body: JSON.stringify({ email, password }),
+					headers: {
+						"content-type": "application/json",
+					},
 				});
 				const data = await res.json();
-				console.log(data);
+				if (data.error) {
+					alert(data.error);
+				} else if (data.admin) {
+					document.location.replace("/dashboard");
+				}
 			});
 		</script>
 	</body>
