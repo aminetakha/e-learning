@@ -68,4 +68,9 @@ export class StudentService {
 			.getCount();
 		return courseCount;
 	}
+
+	async getAllStudents() {
+		const students = await this.studentRepository.find();
+		return students;
+	}
 }

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>OnlineClassroom - Dashboard</title>
+
+		<style>
+			.container {
+				padding: 50px 30px;
+			}
+			.stats {
+				display: flex;
+				gap: 40px;
+				justify-content: center;
+				align-items: center;
+				flex-wrap: wrap;
+			}
+			.stats div {
+				border: 1px solid #ccc;
+				padding: 10px 30px;
+				text-align: center;
+			}
+			.tables {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+			}
+			.tables table {
+				width: 100%;
+			}
+			.tables table th,
+			td {
+				padding: 10px 30px;
+				text-align: center;
+				border-bottom: 1px solid #ccc;
+			}
+			img {
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+			}
+			.table-container {
+				margin-top: 60px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div>Logout button</div>
+			<div class="stats">
+				<div>
+					<h1>Total Earning</h1>
+					<p>$<%= totalEarning %></p>
+				</div>
+				<div>
+					<h1>Total Students</h1>
+					<p>$<%= totalStudentCount %></p>
+				</div>
+				<div>
+					<h1>Total Instructors</h1>
+					<p>$<%= totalInstructorCount %></p>
+				</div>
+				<div>
+					<h1>Total Courses</h1>
+					<p>$<%= totalCoursesCount %></p>
+				</div>
+			</div>
+
+			<div class="table-container">
+				<h1>Students</h1>
+				<div class="tables">
+					<table>
+						<tr>
+							<th>Id</th>
+							<th>Username</th>
+							<th>Email</th>
+							<th>Photo</th>
+							<th>Country</th>
+						</tr>
+						<% students.forEach(student => { %>
+						<tr>
+							<td><%= student.id %></td>
+							<td><%= student.username %></td>
+							<td><%= student.email %></td>
+							<td><img src="/<%= student.photo %>" /></td>
+							<td><%= student.country %></td>
+						</tr>
+						<% }) %>
+					</table>
+				</div>
+			</div>
+
+			<div class="table-container">
+				<h1>Instructors</h1>
+				<div class="tables">
+					<table>
+						<tr>
+							<th>Id</th>
+							<th>Username</th>
+							<th>Photo</th>
+						</tr>
+						<% instructors.forEach(instructor => { %>
+						<tr>
+							<td><%= instructor.id %></td>
+							<td><%= instructor.username %></td>
+							<td><img src="/<%= instructor.photo %>" /></td>
+						</tr>
+						<% }) %>
+					</table>
+				</div>
+			</div>
+
+			<div class="table-container">
+				<h1>Courses</h1>
+				<div class="tables">
+					<table>
+						<tr>
+							<th>Id</th>
+							<th>Title</th>
+							<th>Thumbnail</th>
+							<th>Price</th>
+							<th>Average rating</th>
+						</tr>
+						<% courses.forEach(course => { %>
+						<tr>
+							<td><%= course.id %></td>
+							<td><%= course.title %></td>
+							<td><img src="/<%= course.thumbnail %>" /></td>
+							<td><%= course.price %></td>
+							<td><%= course.average_per_course %></td>
+						</tr>
+						<% }) %>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

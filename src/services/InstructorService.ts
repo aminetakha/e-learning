@@ -37,4 +37,11 @@ export class InstructorService {
 	async delete(id: number) {
 		await this.instructorRepository.delete({ id });
 	}
+
+	async getAllInstructors() {
+		const instructors = await this.instructorRepository.find({
+			select: ["id", "username", "photo"],
+		});
+		return instructors;
+	}
 }

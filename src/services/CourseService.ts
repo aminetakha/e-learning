@@ -205,4 +205,25 @@ export class CourseService {
 		const data = { course, reviews, avg: sum / reviews.length };
 		return data;
 	}
+
+	async getAllCourses() {
+		const courses = await getManager().query(
+			`select c.id, c.title, c.thumbnail, c.price, cat.title, courseId, avg(rating) as average_per_course 
+			from reviews, courses c, categories cat
+			where courseId=c.id and cat.id=c.categoryId
+			group by courseId;`
+		);
+		return courses;
+	}
+
+	async getTotalEarning() {
+		const count = await getManager().query(
+			"select c.id, c.price, count(*) as count from students_courses_courses s, courses c where s.coursesId = c.id  group by coursesId"
+		);
+		let total = 0;
+		count.forEach((el) => {
+			total = total + parseInt(el.count) * el.price;
+		});
+		return total;
+	}
 }

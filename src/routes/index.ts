@@ -8,6 +8,7 @@ import category from "./category";
 import logout from "./logout";
 import question from "./question";
 import review from "./reviews";
+import admin from "./admin";
 
 const router = Router();
 
