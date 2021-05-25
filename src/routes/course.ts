@@ -116,4 +116,11 @@ router.get("/:id/stats", async (req: Request, res: Response) => {
 	res.json({ course });
 });
 
+router.get("/:course/search", async (req, res) => {
+	const { course } = req.params;
+	const courseService = Container.get(CourseService);
+	const courses = await courseService.searchCourses(course);
+	res.json({ courses });
+});
+
 export default router;

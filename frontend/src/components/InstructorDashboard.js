@@ -56,6 +56,7 @@ const InstructorDashboard = (props) => {
 	const [courses, setCourses] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const auth = useSelector((state) => state.auth);
+	const [search, setSearch] = useState("");
 
 	if (auth.user == null || auth.user.type === "student") {
 		props.history.replace("/");
@@ -72,6 +73,11 @@ const InstructorDashboard = (props) => {
 			.catch((err) => console.log(err));
 	}, []);
 
+	const searchHandler = (e) => {
+		e.preventDefault();
+		props.history.push(`/courses/${search}/search`);
+	};
+
 	return (
 		<Container style={{ marginTop: "50px" }}>
 			<div>
@@ -83,19 +89,23 @@ const InstructorDashboard = (props) => {
 							display: "flex",
 						}}
 					>
-						<div className={classes.search}>
-							<div className={classes.searchIcon}>
-								<SearchIcon />
+						<form onSubmit={searchHandler}>
+							<div className={classes.search}>
+								<div className={classes.searchIcon}>
+									<SearchIcon />
+								</div>
+								<InputBase
+									placeholder="Search…"
+									classes={{
+										root: classes.inputRoot,
+										input: classes.inputInput,
+									}}
+									inputProps={{ "aria-label": "search" }}
+									value={search}
+									onChange={(e) => setSearch(e.target.value)}
+								/>
 							</div>
-							<InputBase
-								placeholder="Search…"
-								classes={{
-									root: classes.inputRoot,
-									input: classes.inputInput,
-								}}
-								inputProps={{ "aria-label": "search" }}
-							/>
-						</div>
+						</form>
 						<div>
 							<Link to="/course/create">
 								<Button variant="contained" color="secondary">

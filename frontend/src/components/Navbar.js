@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -26,6 +26,7 @@ const Navbar = ({ history }) => {
 	const cart = useSelector((state) => state.cart);
 	const auth = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
+	const [search, setSearch] = useState("");
 
 	const handleMobileMenuClose = () => {
 		setMobileMoreAnchorEl(null);
@@ -33,6 +34,12 @@ const Navbar = ({ history }) => {
 
 	const handleMobileMenuOpen = (event) => {
 		setMobileMoreAnchorEl(event.currentTarget);
+	};
+
+	const searchHandler = (e) => {
+		e.preventDefault();
+		history.push(`/courses/${search}/search`);
+		setSearch("");
 	};
 
 	const logoutHandler = (e) => {
@@ -108,17 +115,21 @@ const Navbar = ({ history }) => {
 						</Link>
 					</Typography>
 					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-							<SearchIcon />
-						</div>
-						<InputBase
-							placeholder="Search for a course..."
-							classes={{
-								root: classes.inputRoot,
-								input: classes.inputInput,
-							}}
-							inputProps={{ "aria-label": "search" }}
-						/>
+						<form onSubmit={searchHandler}>
+							<div className={classes.searchIcon}>
+								<SearchIcon />
+							</div>
+							<InputBase
+								placeholder="Search for a course..."
+								classes={{
+									root: classes.inputRoot,
+									input: classes.inputInput,
+								}}
+								inputProps={{ "aria-label": "search" }}
+								value={search}
+								onChange={(e) => setSearch(e.target.value)}
+							/>
+						</form>
 					</div>
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>

@@ -226,4 +226,11 @@ export class CourseService {
 		});
 		return total;
 	}
+
+	async searchCourses(title: string) {
+		const courses = await this.courseRepository.find({
+			title: Like(`%${title}%`),
+		});
+		return courses;
+	}
 }
