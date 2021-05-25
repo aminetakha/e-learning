@@ -67,8 +67,14 @@ const CourseVideo = () => {
 				<Spinner />
 			) : (
 				<>
-					<Grid container>
-						<Grid item lg={8} md={8} xs={12}>
+					<Grid container style={{ height: "450px" }}>
+						<Grid
+							item
+							lg={8}
+							md={8}
+							xs={12}
+							style={{ height: "100%" }}
+						>
 							<video
 								width="100%"
 								height="100%"
@@ -78,10 +84,17 @@ const CourseVideo = () => {
 								<source src={`/${filename}`} type="video/mp4" />
 							</video>
 						</Grid>
-						<Grid item lg={4} md={4} xs={12}>
+						<Grid
+							item
+							lg={4}
+							md={4}
+							xs={12}
+							style={{ height: "100%" }}
+						>
 							<Content
 								course={course}
 								readFile={readFileHandler}
+								shouldRead={true}
 							/>
 						</Grid>
 					</Grid>

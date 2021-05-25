@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Content = ({ course, readFile }) => {
+const Content = ({ course, readFile, shouldRead }) => {
 	const classes = useStyles();
 	const [itemToOpen, setItemToOpen] = useState([]);
 
@@ -73,16 +73,22 @@ const Content = ({ course, readFile }) => {
 							{section.files.map((file, fileIndex) => (
 								<React.Fragment key={file.id}>
 									<ListItem button className={classes.nested}>
-										<ListItemText
-											primary={file.title}
-											onClick={() =>
-												readFile(
-													file.name,
-													fileIndex,
-													index
-												)
-											}
-										/>
+										{shouldRead ? (
+											<ListItemText
+												primary={file.title}
+												onClick={() =>
+													readFile(
+														file.name,
+														fileIndex,
+														index
+													)
+												}
+											/>
+										) : (
+											<ListItemText
+												primary={file.title}
+											/>
+										)}
 									</ListItem>
 								</React.Fragment>
 							))}

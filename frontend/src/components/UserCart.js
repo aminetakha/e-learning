@@ -51,7 +51,7 @@ const UserCart = () => {
 
 	if (courses.length === 0) {
 		return (
-			<h1 style={{ marginTop: "30px", textAlign: "center" }}>
+			<h1 style={{ margin: "80px 0", textAlign: "center" }}>
 				Cart is empty
 			</h1>
 		);

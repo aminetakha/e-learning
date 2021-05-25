@@ -65,7 +65,7 @@ const InstructorDashboard = (props) => {
 	useEffect(() => {
 		// the instrutor should be comming from jwt cookie but for now let's just use hardcoded id
 		axios
-			.get("/instructors/1/courses")
+			.get(`/instructors/${auth.user.id}/courses`)
 			.then((res) => {
 				setCourses(res.data.data.courses);
 				setLoading(false);
@@ -119,7 +119,7 @@ const InstructorDashboard = (props) => {
 					{loading ? (
 						<Spinner />
 					) : courses.length === 0 ? (
-						<h1>
+						<h1 style={{ margin: "50px 0" }}>
 							You don't have any courses! Go ahead and make one
 						</h1>
 					) : (
@@ -160,6 +160,7 @@ const InstructorDashboard = (props) => {
 										style={{
 											textDecoration: "none",
 											color: "crimson",
+											marginRight: "45px",
 										}}
 									>
 										Add New Sections

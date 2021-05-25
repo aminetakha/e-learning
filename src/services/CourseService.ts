@@ -38,11 +38,11 @@ export class CourseService {
 			where: { title: course.category },
 		});
 		const newCourse = new Course();
-		newCourse.title = course.category;
+		newCourse.title = course.title;
 		newCourse.description = course.description;
 		newCourse.content = course.content;
 		newCourse.target = course.target;
-		newCourse.category = course.category;
+		newCourse.category = category;
 		newCourse.requirements = course.requirements;
 		newCourse.thumbnail = course.thumbnail;
 		newCourse.price = parseInt(course.price);

@@ -203,11 +203,24 @@ const CourseDetails = () => {
 								/>
 								<CardContent className={classes.actions}>
 									{enrolled ? (
-										<Button>Go to course</Button>
+										<div>
+											<Link
+												to={`/learn/${course.title}`}
+												style={{
+													textDecoration: "none",
+												}}
+											>
+												<Button>Go to course</Button>
+											</Link>
+										</div>
 									) : courseAdded ? (
 										<Link
 											to="/cart"
-											style={{ textDecoration: "none" }}
+											style={{
+												textDecoration: "none",
+												display: "flex",
+												flexDirection: "column",
+											}}
 										>
 											<Button>Go To Cart</Button>
 											<Button>Buy Now</Button>
@@ -237,7 +250,7 @@ const CourseDetails = () => {
 					<Container style={{ marginBottom: "80px" }}>
 						<Grid container className={classes.content} spacing={6}>
 							<Grid item lg={6} sm={6} xs={12}>
-								<Content course={course} />
+								<Content course={course} shouldRead={false} />
 							</Grid>
 							<Grid item lg={6} sm={6} xs={12}>
 								<Instructor instructor={course.instructor} />

@@ -86,54 +86,68 @@ const CourseStats = () => {
 							</div>
 						</div>
 						<div>
-							<TableContainer
-								component={Paper}
-								style={{
-									display: "flex",
-									justifyContent: "center",
-								}}
-							>
-								<Table
-									className={classes.table}
-									aria-label="simple table"
+							{reviews.length === 0 ? (
+								<div
+									style={{
+										margin: "70px 0",
+										textAlign: "center",
+									}}
 								>
-									<TableHead>
-										<TableRow>
-											<TableCell></TableCell>
-											<TableCell align="left">
-												Review
-											</TableCell>
-											<TableCell align="left">
-												Rating
-											</TableCell>
-										</TableRow>
-									</TableHead>
-									<TableBody>
-										{reviews.map((review, index) => (
-											<TableRow key={index}>
-												<TableCell>
-													<img
-														src={`/${review.photo}`}
-														width="70px"
-														height="70px"
-														style={{
-															borderRadius: "50%",
-														}}
-													/>
+									<h1>No reviews</h1>
+								</div>
+							) : (
+								<TableContainer
+									component={Paper}
+									style={{
+										display: "flex",
+										justifyContent: "center",
+									}}
+								>
+									<Table
+										className={classes.table}
+										aria-label="simple table"
+									>
+										<TableHead>
+											<TableRow>
+												<TableCell></TableCell>
+												<TableCell align="left">
+													Review
 												</TableCell>
 												<TableCell align="left">
-													{review.review}
-												</TableCell>
-												<TableCell align="left">
-													<MyRating
-														rating={review.rating}
-													/>
+													Rating
 												</TableCell>
 											</TableRow>
-										))}
-									</TableBody>
-								</Table>
-							</TableContainer>
+										</TableHead>
+										<TableBody>
+											{reviews.map((review, index) => (
+												<TableRow key={index}>
+													<TableCell>
+														<img
+															src={`/${review.photo}`}
+															width="70px"
+															height="70px"
+															style={{
+																borderRadius:
+																	"50%",
+															}}
+														/>
+													</TableCell>
+													<TableCell align="left">
+														{review.review}
+													</TableCell>
+													<TableCell align="left">
+														<MyRating
+															rating={
+																review.rating
+															}
+														/>
+													</TableCell>
+												</TableRow>
+											))}
+										</TableBody>
+									</Table>
+								</TableContainer>
+							)}
 						</div>
 					</div>
 				</Container>
