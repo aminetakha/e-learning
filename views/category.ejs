@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>OnlineClassroom - Admin</title>
+
+		<style>
+			body {
+				margin: 0;
+				box-sizing: border-box;
+			}
+			.container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				text-align: center;
+			}
+			form {
+				width: 70%;
+			}
+			form div {
+				width: 100%;
+				margin: 30px 0;
+			}
+			form input {
+				width: 100%;
+				padding: 10px 16px;
+				box-sizing: border-box;
+			}
+			form button {
+				width: 60%;
+				padding: 10px;
+				font-size: 15px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<form method="POST" id="form" enctype="multipart/form-data">
+				<h1>Add new category</h1>
+				<div>
+					<input
+						type="text"
+						name="title"
+						placeholder="Enter your category title..."
+					/>
+				</div>
+				<div>
+					<input type="file" name="thumbnail" />
+				</div>
+				<div>
+					<button type="submit">Add category</button>
+				</div>
+			</form>
+		</div>
+
+		<script>
+			const form = document.getElementById("form");
+			form.addEventListener("submit", async (e) => {
+				e.preventDefault();
+				const title = form.title.value;
+				const file = form.thumbnail.files[0];
+				const formData = new FormData();
+				formData.append("title", title);
+				formData.append("thumbnail", file);
+				const res = await fetch("/categories/add", {
+					method: "POST",
+					body: formData,
+				});
+				const data = await res.json();
+				if (data.success) {
+					alert(data.success);
+					window.history.back();
+				} else {
+					alert(data.error);
+				}
+			});
+		</script>
+	</body>
+</html>

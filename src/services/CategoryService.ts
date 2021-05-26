@@ -18,4 +18,14 @@ export class CategoryService {
 		});
 		return category;
 	}
+
+	async add(data) {
+		const category = new Category();
+		category.title = data.title;
+		category.thumbnail = data.thumbnail;
+		category.courses = [];
+
+		const newCategory = await this.categoryRepository.save(category);
+		return newCategory;
+	}
 }

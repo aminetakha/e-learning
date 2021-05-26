@@ -15,6 +15,10 @@ router.get("/", checkAdmin, (req: any, res: Response) => {
 	res.render("index");
 });
 
+router.get("/category", (req, res) => {
+	res.render("category");
+});
+
 router.post("/login", async (req: any, res: Response) => {
 	const { email, password } = req.body;
 
