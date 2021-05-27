@@ -13,6 +13,14 @@ export class RegisterService {
 	private studentRepository = getRepository(Student);
 	private cartRepository = getRepository(Cart);
 
+	addHttp(actualLink: string) {
+		let link = actualLink;
+		if (link.slice(0, 4) !== "http") {
+			link = "http://" + link;
+		}
+		return link;
+	}
+
 	async registerUser(regiserDto: RegisterDto) {
 		let instructor = await this.instructorRepository.findOne({
 			email: regiserDto.email,
@@ -21,6 +29,11 @@ export class RegisterService {
 			return { error: "Email already exists" };
 		}
 		regiserDto.password = await hashPassword(regiserDto.password);
+		regiserDto.twitter = this.addHttp(regiserDto.twitter);
+		regiserDto.github = this.addHttp(regiserDto.github);
+		regiserDto.website = this.addHttp(regiserDto.website);
+		regiserDto.youtube = this.addHttp(regiserDto.youtube);
+
 		instructor = await this.instructorRepository.save(regiserDto);
 		return { instructor };
 	}

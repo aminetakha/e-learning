@@ -132,6 +132,11 @@ const Navbar = ({ history }) => {
 						</form>
 					</div>
 					<div className={classes.grow} />
+					<div>
+						<Button onClick={() => history.push("/instructors")}>
+							View Instructors
+						</Button>
+					</div>
 					<div className={classes.sectionDesktop}>
 						<Button
 							className={classes.cartBtnContainer}

@@ -117,7 +117,7 @@ const StudentForm = (props) => {
 							<Input
 								id="cpassword"
 								name="cpassword"
-								type="cpassword"
+								type="password"
 								aria-describedby="cpassword-text"
 								value={studentData.cpassword}
 								onChange={onChangeHandler}
@@ -149,7 +149,7 @@ const StudentForm = (props) => {
 							type="submit"
 							variant="contained"
 							color="secondary"
-							style={{ width: "40%" }}
+							style={{ width: "40%", marginTop: "30px" }}
 						>
 							Create Account
 						</Button>

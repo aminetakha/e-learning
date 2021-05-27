@@ -170,6 +170,19 @@ const CourseDetails = () => {
 								</Typography>
 								<div
 									style={{
+										marginBottom: "10px",
+										backgroundColor: "yellow",
+										margin: "15px 0",
+										width: "100px",
+										color: "black",
+										padding: "5px 16px",
+										borderRadius: "7px",
+									}}
+								>
+									{course.target}
+								</div>
+								<div
+									style={{
 										display: "flex",
 										alignItems: "center",
 									}}
