@@ -23,6 +23,8 @@ export class Question {
 	@OneToMany(() => Answer, (answer) => answer.question)
 	answers: Answer[];
 
-	@ManyToOne(() => Student, (student) => student.questions)
+	@ManyToOne(() => Student, (student) => student.questions, {
+		onDelete: "CASCADE",
+	})
 	student: Student;
 }

@@ -28,4 +28,9 @@ export class CategoryService {
 		const newCategory = await this.categoryRepository.save(category);
 		return newCategory;
 	}
+
+	async delete(id: number) {
+		const category = await this.categoryRepository.findOne(id);
+		await this.categoryRepository.delete(category);
+	}
 }

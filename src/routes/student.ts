@@ -88,4 +88,15 @@ router.get(
 	}
 );
 
+router.post("/remove/:id", async (req, res) => {
+	const { id } = req.params;
+	const studentService = Container.get(StudentService);
+	try {
+		await studentService.removeStudent(parseInt(id));
+		res.redirect("/dashboard");
+	} catch (err) {
+		console.log(err);
+	}
+});
+
 export default router;

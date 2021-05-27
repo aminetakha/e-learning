@@ -14,7 +14,9 @@ export class Answer {
 	@ManyToOne(() => Question, (question) => question.answers)
 	question: Question;
 
-	@ManyToOne(() => Student, (student) => student.answers)
+	@ManyToOne(() => Student, (student) => student.answers, {
+		onDelete: "CASCADE",
+	})
 	student: Student[];
 
 	@ManyToOne(() => Instructor, (instructor) => instructor.answers)

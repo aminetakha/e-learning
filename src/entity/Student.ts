@@ -38,18 +38,24 @@ export class Student {
 	@JoinTable()
 	courses: Course[];
 
-	@OneToOne(() => Cart, (cart) => cart.student)
+	@OneToOne(() => Cart, (cart) => cart.student, { onDelete: "CASCADE" })
 	cart: Cart;
 
-	@OneToMany(() => Review, (review) => review.student)
+	@OneToMany(() => Review, (review) => review.student, {
+		onDelete: "CASCADE",
+	})
 	reviews: Review[];
 
-	@OneToMany(() => Question, (question) => question.student)
+	@OneToMany(() => Question, (question) => question.student, {
+		onDelete: "CASCADE",
+	})
 	questions: Question[];
 
-	@OneToMany(() => Answer, (answer) => answer.student)
+	@OneToMany(() => Answer, (answer) => answer.student, {
+		onDelete: "CASCADE",
+	})
 	answers: Answer[];
 
-	@OneToMany(() => Exam, (exam) => exam.student)
+	@OneToMany(() => Exam, (exam) => exam.student, { onDelete: "CASCADE" })
 	exams: Exam[];
 }

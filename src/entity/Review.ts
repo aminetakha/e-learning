@@ -13,9 +13,13 @@ export class Review {
 	@Column()
 	rating: number;
 
-	@ManyToOne(() => Student, (student) => student.courses)
+	@ManyToOne(() => Student, (student) => student.courses, {
+		onDelete: "CASCADE",
+	})
 	student: Student;
 
-	@ManyToOne(() => Course, (course) => course.reviews)
+	@ManyToOne(() => Course, (course) => course.reviews, {
+		onDelete: "CASCADE",
+	})
 	course: Course;
 }

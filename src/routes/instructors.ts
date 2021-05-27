@@ -57,10 +57,14 @@ router.put("/:id", async (req: Request, res: Response) => {
 	res.json({ data });
 });
 
-router.delete("/:id", async (req: Request, res: Response) => {
+router.post("/remove/:id", async (req: Request, res: Response) => {
 	const instructorService = Container.get(InstructorService);
-	await instructorService.delete(parseInt(req.params.id));
-	res.json({ message: "Account has been deleted successfully" });
+	try {
+		await instructorService.delete(parseInt(req.params.id));
+		res.redirect("/dashboard");
+	} catch (err) {
+		console.log(err);
+	}
 });
 
 export default router;

@@ -30,4 +30,14 @@ router.post("/add", upload.single("thumbnail"), async (req, res) => {
 	}
 });
 
+router.post("/remove/:id", async (req: Request, res: Response) => {
+	const categoryService = Container.get(CategoryService);
+	try {
+		await categoryService.delete(parseInt(req.params.id));
+		res.redirect("/dashboard");
+	} catch (err) {
+		console.log(err);
+	}
+});
+
 export default router;

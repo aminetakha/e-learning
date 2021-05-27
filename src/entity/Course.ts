@@ -56,7 +56,7 @@ export class Course {
 	@ManyToOne(() => Category, (category) => category.courses)
 	category: Category;
 
-	@OneToMany(() => Review, (review) => review.course)
+	@OneToMany(() => Review, (review) => review.course, { onDelete: "CASCADE" })
 	reviews: Review[];
 
 	@OneToMany(() => Section, (section) => section.course)

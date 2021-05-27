@@ -9,6 +9,7 @@ import { getRepository } from "typeorm";
 import createJwtToken from "../util/createJwtToken";
 import verifyAdminJwt from "../util/verifyAdminJwt";
 import checkAdmin from "../util/checkAdmin";
+import { CategoryService } from "../services/CategoryService";
 const router = Router();
 
 router.get("/", checkAdmin, (req: any, res: Response) => {
@@ -58,6 +59,7 @@ router.get("/dashboard", verifyAdminJwt, async (req: any, res) => {
 	const studentService = Container.get(StudentService);
 	const instructorService = Container.get(InstructorService);
 	const courseService = Container.get(CourseService);
+	const categoryService = Container.get(CategoryService);
 
 	const students = await studentService.getAllStudents();
 	const instructors = await instructorService.getAllInstructors();
@@ -66,11 +68,13 @@ router.get("/dashboard", verifyAdminJwt, async (req: any, res) => {
 	const totalStudentCount = students.length;
 	const totalInstructorCount = instructors.length;
 	const totalCoursesCount = courses.length;
+	const categories = await categoryService.getAll();
 
 	res.render("dashboard", {
 		students,
 		instructors,
 		courses,
+		categories,
 		totalEarning,
 		totalStudentCount,
 		totalInstructorCount,
