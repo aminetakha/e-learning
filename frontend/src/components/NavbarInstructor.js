@@ -55,7 +55,9 @@ const NavbarInstructor = ({ history }) => {
 		>
 			{auth.isAuthenticated ? (
 				<>
-					<MenuItem>
+					<MenuItem
+						onClick={() => history.push("/instructor/update")}
+					>
 						<img
 							src={`http://localhost:5000/${auth.user.photo}`}
 							width="30px"
@@ -114,7 +116,11 @@ const NavbarInstructor = ({ history }) => {
 									style={{
 										margin: "0px 10px",
 										borderRadius: "50%",
+										cursor: "pointer",
 									}}
+									onClick={() =>
+										history.push("/instructor/update")
+									}
 								/>
 
 								<Button

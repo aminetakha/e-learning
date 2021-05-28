@@ -13,7 +13,7 @@ export class InstructorService {
 	}
 
 	async findById(id: number): Promise<Instructor> {
-		return this.instructorRepository.findOne({ id });
+		return await this.instructorRepository.findOne({ id });
 	}
 
 	async findUserCourses(id: number) {
@@ -41,6 +41,7 @@ export class InstructorService {
 		instructor.github = instructorDto.github;
 		instructor.twitter = instructorDto.twitter;
 		instructor.youtube = instructorDto.youtube;
+		instructor.country = instructorDto.country;
 		instructor = await this.instructorRepository.save(instructor);
 		return instructor;
 	}

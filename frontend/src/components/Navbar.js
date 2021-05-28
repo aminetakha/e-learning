@@ -177,6 +177,9 @@ const Navbar = ({ history }) => {
 										margin: "0px 10px",
 										borderRadius: "50%",
 									}}
+									onClick={() =>
+										history.push("/student/update")
+									}
 								/>
 
 								<Button

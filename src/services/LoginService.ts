@@ -45,6 +45,12 @@ export class LoginService {
 							"id",
 							"username",
 							"photo",
+							"website",
+							"github",
+							"twitter",
+							"youtube",
+							"country",
+							"about",
 						],
 				  });
 
@@ -63,17 +69,27 @@ export class LoginService {
 			username: user.username,
 			photo: user.photo,
 		};
-		if (userType === "student") {
+		if (user instanceof Student) {
 			return {
 				token,
 				user: currUser,
 				cart: (user as any).cart.courses.length,
 			};
+		} else {
+			return {
+				token,
+				user: {
+					id: currUser.id,
+					username: currUser.username,
+					photo: currUser.photo,
+					website: user.website,
+					github: user.github,
+					twitter: user.twitter,
+					youtube: user.youtube,
+					about: user.about,
+					country: user.country,
+				},
+			};
 		}
-
-		return {
-			token,
-			user: currUser,
-		};
 	}
 }

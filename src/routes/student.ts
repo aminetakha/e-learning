@@ -27,6 +27,16 @@ router.post("/cart", verifyJwtToken, async (req: Request, res: Response) => {
 	}
 });
 
+router.post("/:id", async (req: Request, res: Response) => {
+	const { username, country } = req.body;
+	const studentService = Container.get(StudentService);
+	const data = await studentService.update(parseInt(req.params.id), {
+		username,
+		country,
+	});
+	res.json({ data });
+});
+
 router.delete(
 	"/cart/course/:courseId",
 	verifyJwtToken,

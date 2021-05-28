@@ -42,9 +42,9 @@ router.get(
 	}
 );
 
-router.put("/:id", async (req: Request, res: Response) => {
-	const { username, about, website, github, twitter, youtube } =
-		req.body as InstructorDto;
+router.post("/:id", async (req: Request, res: Response) => {
+	const { username, about, website, github, twitter, youtube, country } =
+		req.body;
 	const instructorService = Container.get(InstructorService);
 	const data = await instructorService.update(parseInt(req.params.id), {
 		username,
@@ -53,6 +53,7 @@ router.put("/:id", async (req: Request, res: Response) => {
 		github,
 		twitter,
 		youtube,
+		country,
 	});
 	res.json({ data });
 });

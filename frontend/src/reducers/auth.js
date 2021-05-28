@@ -26,6 +26,15 @@ const auth = (state = initialState, action) => {
 				...state,
 				cart: state.cart + 1,
 			};
+		case "UPDATE-PROFILE":
+			return {
+				...state,
+				isAuthenticated: true,
+				user: {
+					...state.user,
+					...payload,
+				},
+			};
 		case "LOGOUT":
 			return {
 				...state,

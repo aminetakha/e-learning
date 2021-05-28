@@ -13,3 +13,7 @@ export const removeCourse = () => {
 export const addCourse = () => {
 	return { type: "ADD-COURSE" };
 };
+
+export const updateProfile = (data) => {
+	return { type: "UPDATE-PROFILE", payload: data };
+};

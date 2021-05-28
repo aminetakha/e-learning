@@ -26,6 +26,8 @@ import CourseStats from "./components/CourseStats";
 import Search from "./components/Search";
 import Instructors from "./components/Instructors";
 import InstructorDetails from "./components/InstructorDetails";
+import InstructorUpdate from "./components/InstructorUpdate";
+import StudentUpdate from "./components/StudentUpdate";
 
 const App = () => {
 	const auth = useSelector((state) => state.auth);
@@ -45,6 +47,7 @@ const App = () => {
 			)}
 			<Switch>
 				<Route exact path="/" component={HomeRoute} />
+				<Route path="/student/update" component={StudentUpdate} />
 				<Route path="/course/:id/manage" component={ManageCourse} />
 				<Route path="/course/create" component={CreateCourse} />
 				<Route path="/courses/:course/search" component={Search} />
@@ -110,6 +113,7 @@ const App = () => {
 				<Route path="/courses/:title" component={CourseDetails} />
 				<Route path="/course/:courseId/stats" component={CourseStats} />
 				<Route path="/instructors" component={Instructors} />
+				<Route path="/instructor/update" component={InstructorUpdate} />
 				<Route
 					path="/instructor/:instructorId"
 					component={InstructorDetails}

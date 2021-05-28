@@ -30,6 +30,14 @@ export class StudentService {
 		);
 	}
 
+	async update(id: number, data) {
+		let student = await this.getStudentById(id);
+		student.username = data.username;
+		student.country = data.country;
+		student = await this.studentRepository.save(student);
+		return student;
+	}
+
 	async findItemInCart(courseId: number, userId: number) {
 		const user = await this.studentRepository.findOne(userId, {
 			relations: ["cart"],
