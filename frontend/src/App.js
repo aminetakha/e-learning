@@ -28,6 +28,7 @@ import Instructors from "./components/Instructors";
 import InstructorDetails from "./components/InstructorDetails";
 import InstructorUpdate from "./components/InstructorUpdate";
 import StudentUpdate from "./components/StudentUpdate";
+import StripeContainer from "./components/StripeContainer";
 
 const App = () => {
 	const auth = useSelector((state) => state.auth);
@@ -51,6 +52,10 @@ const App = () => {
 				<Route path="/course/:id/manage" component={ManageCourse} />
 				<Route path="/course/create" component={CreateCourse} />
 				<Route path="/courses/:course/search" component={Search} />
+				<Route
+					path="/courses/:courseId/enroll"
+					component={StripeContainer}
+				/>
 				<Route
 					path="/instructor/course"
 					component={InstructorDashboard}

@@ -8,9 +8,12 @@ import { Instructor } from "../entity/Instructor";
 import { Question } from "../entity/Question";
 import { Review } from "../entity/Review";
 import { Section } from "../entity/Section";
-import { Student } from "../entity/Student";
 import { InstructorService } from "./InstructorService";
 import { StudentService } from "./StudentService";
+import Stripe from "stripe";
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+	apiVersion: "2020-08-27",
+});
 
 @Service()
 export class CourseService {
@@ -232,5 +235,33 @@ export class CourseService {
 			title: Like(`%${title}%`),
 		});
 		return courses;
+	}
+
+	async enroll(courseId: number, studentId: number, id) {
+		const studentService = Container.get(StudentService);
+		const courseService = Container.get(CourseService);
+		const course = await courseService.getCourseById(courseId);
+
+		const count = await studentService.verifyCourseEnrollment(
+			studentId,
+			courseId
+		);
+
+		if (count === 1) {
+			console.log("INSIDE IF");
+			throw new Error("You have already bought the course");
+		}
+
+		const payment = await stripe.paymentIntents.create({
+			amount: Math.ceil(course.price * 100),
+			currency: "USD",
+			description: course.title,
+			payment_method: id,
+			confirm: true,
+		});
+
+		await getManager().query(
+			`INSERT INTO students_courses_courses (studentsId, coursesId) values (${studentId}, ${courseId})`
+		);
 	}
 }

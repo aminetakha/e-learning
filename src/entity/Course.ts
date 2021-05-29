@@ -10,6 +10,7 @@ import { File } from "./File";
 import { Instructor } from "./Instructor";
 import { Review } from "./Review";
 import { Section } from "./Section";
+import { Student } from "./Student";
 
 @Entity({ name: "courses" })
 export class Course {

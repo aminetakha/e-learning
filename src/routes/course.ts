@@ -123,4 +123,21 @@ router.get("/:course/search", async (req, res) => {
 	res.json({ courses });
 });
 
+router.post(
+	"/:courseId/enroll",
+	verifyJwtToken,
+	async (req: Request, res: Response) => {
+		const studentId: number = (req as any).user;
+		const { courseId } = req.params;
+		const { id } = req.body;
+		const courseService = Container.get(CourseService);
+		try {
+			await courseService.enroll(parseInt(courseId), studentId, id);
+			res.json({ success: "Course bought successfully" });
+		} catch (err) {
+			res.json({ error: err.message });
+		}
+	}
+);
+
 export default router;
