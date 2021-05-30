@@ -19,9 +19,11 @@ router.get("/:id", async (req: Request, res: Response) => {
 });
 
 router.get("/:id/courses", async (req: Request, res: Response) => {
+	const { title } = req.query;
 	const instructorService = Container.get(InstructorService);
 	const data = await instructorService.findUserCourses(
-		parseInt(req.params.id)
+		parseInt(req.params.id),
+		title
 	);
 	res.json({ data });
 });

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const InstructorCourses = ({ instructorId, limit, instructorName }) => {
+const InstructorCourses = ({ instructorId, limit, instructorName, title }) => {
 	const [courses, setCourses] = useState([]);
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/instructors/${instructorId}/courses`)
+			.get(
+				`http://localhost:5000/instructors/${instructorId}/courses?title=${title}`
+			)
 			.then((res) => {
-				const allCourses = res.data.data.courses;
-
+				const allCourses = res.data.data[0].courses;
 				if (limit) {
 					setCourses([...allCourses.slice(0, limit)]);
 				} else {

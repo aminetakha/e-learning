@@ -3,6 +3,7 @@ import { getManager, getRepository } from "typeorm";
 import { InstructorDto } from "../dto/instructorDto";
 import { Course } from "../entity/Course";
 import { Instructor } from "../entity/Instructor";
+import { Review } from "../entity/Review";
 
 @Service()
 export class InstructorService {
@@ -16,10 +17,22 @@ export class InstructorService {
 		return await this.instructorRepository.findOne({ id });
 	}
 
-	async findUserCourses(id: number) {
-		const data = await this.instructorRepository.findOne(id, {
-			relations: ["courses", "courses.reviews"],
-		});
+	async findUserCourses(id: number, title) {
+		let data;
+		if (!title) {
+			data = await this.instructorRepository.findOne(id, {
+				relations: ["courses", "courses.reviews"],
+			});
+		} else {
+			data = await this.instructorRepository
+				.createQueryBuilder("instructor")
+				.leftJoinAndSelect("instructor.courses", "courses")
+				.leftJoinAndSelect("courses.reviews", "reviews")
+				.where("(instructor.id = :id AND courses.title != :title)")
+				.setParameters({ id, title })
+				.getMany();
+		}
+
 		return data;
 	}
 

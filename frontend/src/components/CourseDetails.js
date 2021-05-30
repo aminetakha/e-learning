@@ -284,6 +284,7 @@ const CourseDetails = () => {
 						<Grid container xs={12}>
 							<InstructorCourses
 								instructorId={course.instructor.id}
+								title={course.title}
 								instructorName={course.instructor.username}
 								limit={3}
 							/>
