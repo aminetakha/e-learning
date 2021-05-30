@@ -3,6 +3,7 @@ import Section from "./Section";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Container, Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const ManageCourse = (props) => {
 	const { id } = useParams();
@@ -14,6 +15,17 @@ const ManageCourse = (props) => {
 	}
 	return (
 		<Container style={{ margin: "50px 0" }}>
+			<div style={{ marginBottom: "30px" }}>
+				<Link
+					to="/instructor/course"
+					style={{
+						textDecoration: "none",
+						color: "crimson",
+					}}
+				>
+					Go back
+				</Link>
+			</div>
 			<div>
 				{Sections.map((Sec, index) => (
 					<div

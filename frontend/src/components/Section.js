@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "react-notifications/lib/notifications.css";
+import {
+	NotificationContainer,
+	NotificationManager,
+} from "react-notifications";
 import File from "./File";
 import { Button, FormControl, Input, InputLabel } from "@material-ui/core";
 
@@ -27,13 +32,21 @@ const Section = ({ courseId }) => {
 				})
 				.then((res) => {
 					setFiles([]);
-					alert(res.data.success);
+					NotificationManager.success(res.data.success, "Success");
 				})
-				.catch((err) => alert(err));
+				.catch((err) =>
+					NotificationManager.error("An error occured", "Error")
+				);
 		} else {
 			axios
 				.post(`/courses/${courseId}/section`, { title: sectionName })
-				.then((res) => setCreatedSectionId(res.data.msg.id))
+				.then((res) => {
+					NotificationManager.success(
+						"Section added successfully",
+						"Success"
+					);
+					setCreatedSectionId(res.data.msg.id);
+				})
 				.catch((err) => console.log(err));
 		}
 		setAdded(true);
@@ -42,6 +55,7 @@ const Section = ({ courseId }) => {
 
 	return (
 		<div>
+			<NotificationContainer />
 			<div>
 				{added && sectionName ? (
 					<div

@@ -6,6 +6,10 @@ import {
 	Grid,
 	Button,
 } from "@material-ui/core";
+import {
+	NotificationContainer,
+	NotificationManager,
+} from "react-notifications";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 
@@ -22,7 +26,7 @@ const StudentForm = (props) => {
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
 		if (studentData.password !== studentData.cpassword) {
-			alert("Passwords do not match");
+			NotificationManager.error("Passwords do not match", "Error");
 		} else {
 			const data = new FormData();
 			data.append("username", studentData.username);
@@ -32,10 +36,16 @@ const StudentForm = (props) => {
 			data.append("country", studentData.country);
 			try {
 				const res = await axios.post("/register/student", data);
-				alert("Account created successfully! you can now log in");
+				NotificationManager.success(
+					"Account created successfully! you can now log in",
+					"Success"
+				);
 				props.history.push("/login");
 			} catch (err) {
-				alert("An error occured! Please verify your data");
+				NotificationManager.error(
+					"An error occured! Please verify your data",
+					"Error"
+				);
 			}
 		}
 	};
@@ -56,6 +66,7 @@ const StudentForm = (props) => {
 
 	return (
 		<div>
+			<NotificationContainer />
 			<Grid
 				container
 				style={{
