@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const CartItem = ({ item, remove }) => {
 	const removeItemHandler = (id) => {
@@ -36,6 +37,21 @@ const CartItem = ({ item, remove }) => {
 					onClick={() => removeItemHandler(item.id)}
 				>
 					Remove
+				</p>
+				<p
+					style={{
+						marginLeft: "40px",
+						color: "crimson",
+						cursor: "pointer",
+						fontWeight: "bold",
+					}}
+				>
+					<Link
+						to={`/courses/${item.id}/enroll`}
+						style={{ textDecoration: "none" }}
+					>
+						Buy this course
+					</Link>
 				</p>
 			</div>
 			<div>

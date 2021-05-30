@@ -9,6 +9,7 @@ const auth = (state = initialState, action) => {
 	const { type, payload } = action;
 	switch (type) {
 		case "LOGIN":
+			localStorage.setItem("cart", JSON.stringify([]));
 			return {
 				...state,
 				isAuthenticated: true,
@@ -36,6 +37,7 @@ const auth = (state = initialState, action) => {
 				},
 			};
 		case "LOGOUT":
+			localStorage.setItem("cart", JSON.stringify([]));
 			return {
 				...state,
 				isAuthenticated: false,

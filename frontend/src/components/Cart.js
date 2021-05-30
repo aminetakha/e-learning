@@ -59,10 +59,6 @@ const Cart = () => {
 				<h1>
 					<b>{`$${totalPrice}`}</b>
 				</h1>
-
-				<Button style={{ color: "white", backgroundColor: "crimson" }}>
-					Checkout
-				</Button>
 			</div>
 		</div>
 	);

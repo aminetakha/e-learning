@@ -32,6 +32,8 @@ const Login = (props) => {
 	const loginHandler = (e) => {
 		e.preventDefault();
 		const URL = "http://localhost:5000/login/" + credentials.type;
+		const cart = JSON.parse(localStorage.getItem("cart"));
+		credentials.cart = cart;
 		axios
 			.post(URL, credentials, {
 				withCredentials: true,

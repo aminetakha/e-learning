@@ -85,13 +85,6 @@ const UserCart = () => {
 				<h1>
 					<b>{`$${totalPrice}`}</b>
 				</h1>
-
-				<Button
-					style={{ color: "white", backgroundColor: "crimson" }}
-					onClick={handleClick}
-				>
-					Checkout
-				</Button>
 			</div>
 		</div>
 	);

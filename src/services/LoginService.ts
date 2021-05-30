@@ -1,6 +1,7 @@
 import { Service } from "typedi";
-import { getRepository } from "typeorm";
+import { getManager, getRepository } from "typeorm";
 import { LoginDto } from "../dto/loginDto";
+import { Cart } from "../entity/Cart";
 import { Instructor } from "../entity/Instructor";
 import { Student } from "../entity/Student";
 import createJwtToken from "../util/createJwtToken";
@@ -21,6 +22,22 @@ interface Response {
 export class LoginService {
 	private studentRepository = getRepository(Student);
 	private instructorRepository = getRepository(Instructor);
+	private cartRepository = getRepository(Cart);
+
+	async getStudentCart(student: Student, cartItems) {
+		const cart = await this.cartRepository.findOne({
+			where: { student },
+		});
+		this.addCoursesToCartAfterLogin(cartItems, cart.id);
+	}
+
+	async addCoursesToCartAfterLogin(cartItems, cartId: number) {
+		cartItems.forEach(async (course) => {
+			await getManager().query(
+				`INSERT INTO carts_courses_courses (cartsId, coursesId) VALUES (${cartId}, ${course.id})`
+			);
+		});
+	}
 
 	async userLogin(loginDto: LoginDto, userType: string) {
 		const { email, password } = loginDto;
@@ -61,6 +78,10 @@ export class LoginService {
 		const result = await verifyPassword(password, user.password);
 		if (!result) {
 			return { error: "Wrong password" };
+		}
+
+		if (result && userType === "student" && loginDto.cart.length > 0) {
+			await this.getStudentCart(user as Student, loginDto.cart);
 		}
 
 		const token = await createJwtToken({ user: user.id });
