@@ -6,7 +6,6 @@ import { Course } from "../entity/Course";
 import { File } from "../entity/File";
 import { Instructor } from "../entity/Instructor";
 import { Question } from "../entity/Question";
-import { Review } from "../entity/Review";
 import { Section } from "../entity/Section";
 import { InstructorService } from "./InstructorService";
 import { StudentService } from "./StudentService";
@@ -66,7 +65,7 @@ export class CourseService {
 
 	async getCourseByTitle(title: string) {
 		const courses = await this.courseRepository.findOne({
-			where: { title: Like(`%${title}%`) },
+			where: { title: title },
 			relations: [
 				"reviews",
 				"reviews.student",
@@ -82,7 +81,7 @@ export class CourseService {
 
 	async getCourseFilesByTitle(title: string) {
 		const courses = await this.courseRepository.findOne({
-			where: { title: Like(`%${title}%`) },
+			where: { title: title },
 			relations: [
 				"sections",
 				"sections.files",
@@ -210,12 +209,34 @@ export class CourseService {
 	}
 
 	async getAllCourses() {
-		const courses = await getManager().query(
-			`select c.id, c.title, c.thumbnail, c.price, cat.title, courseId, avg(rating) as average_per_course 
-			from reviews, courses c, categories cat
-			where courseId=c.id and cat.id=c.categoryId
-			group by courseId;`
-		);
+		const newCourses = await this.courseRepository
+			.createQueryBuilder("courses")
+			.leftJoinAndSelect("courses.category", "category")
+			.leftJoinAndSelect("courses.reviews", "reviews")
+			.getMany();
+
+		const averageRating = (reviews) => {
+			if (reviews.length === 0) {
+				return 0;
+			}
+			let total = 0;
+			reviews.forEach((review) => {
+				total += review.rating;
+			});
+			return total / reviews.length;
+		};
+
+		const courses = newCourses.map((course) => {
+			const courseRating = averageRating(course.reviews);
+			return {
+				id: course.id,
+				courseTitle: course.title,
+				title: course.category.title,
+				thumbnail: course.thumbnail,
+				price: course.price,
+				average_per_course: courseRating,
+			};
+		});
 		return courses;
 	}
 
@@ -248,7 +269,6 @@ export class CourseService {
 		);
 
 		if (count === 1) {
-			console.log("INSIDE IF");
 			throw new Error("You have already bought the course");
 		}
 
@@ -263,5 +283,6 @@ export class CourseService {
 		await getManager().query(
 			`INSERT INTO students_courses_courses (studentsId, coursesId) values (${studentId}, ${courseId})`
 		);
+		await studentService.removeItemFromCart(courseId, studentId);
 	}
 }

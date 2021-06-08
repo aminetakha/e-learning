@@ -193,13 +193,26 @@ const CreateCourse = (props) => {
 								style={{ width: "70%", marginBottom: "30px" }}
 							>
 								<InputLabel htmlFor="target">Target</InputLabel>
-								<Input
+								{/* <Input
 									id="target"
 									name="target"
 									aria-describedby="target-text"
 									value={courseData.target}
 									onChange={onChangeHandler}
-								/>
+								/> */}
+								<Select
+									name="target"
+									onChange={onChangeHandler}
+									value={courseData.target}
+								>
+									<MenuItem value="Beginner">
+										Beginner
+									</MenuItem>
+									<MenuItem value="Intermediate">
+										Intermediate
+									</MenuItem>
+									<MenuItem value="Expert">Expert</MenuItem>
+								</Select>
 							</FormControl>
 							<div style={{ marginBottom: "30px" }}>
 								<FormControl>

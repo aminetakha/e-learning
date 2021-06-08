@@ -101,6 +101,7 @@ const CourseStats = () => {
 									style={{
 										display: "flex",
 										justifyContent: "center",
+										margin: "70px 0",
 									}}
 								>
 									<Table

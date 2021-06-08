@@ -8,12 +8,17 @@ import Spinner from "../components/UI/Spinner";
 
 const CategoryCoursesRoute = () => {
 	const [courses, setCourses] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const { category } = useParams();
 
 	useEffect(() => {
+		setLoading(true);
 		axios
 			.get(`http://localhost:5000/courses/category/${category}`)
-			.then((res) => setCourses(res.data[0].courses))
+			.then((res) => {
+				setCourses(res.data[0].courses);
+				setLoading(false);
+			})
 			.catch((err) => console.log(err));
 	}, [category]);
 
@@ -22,10 +27,15 @@ const CategoryCoursesRoute = () => {
 			<Typography
 				component="h1"
 				variant="h4"
+				style={{ marginTop: "30px" }}
 			>{`${category} courses`}</Typography>
 
-			{courses.length === 0 ? (
+			{loading ? (
 				<Spinner />
+			) : courses.length === 0 ? (
+				<h3 style={{ textAlign: "center", margin: "50px 0" }}>
+					No courses are available so far for this category
+				</h3>
 			) : (
 				courses.map((course) => (
 					<CourseCard

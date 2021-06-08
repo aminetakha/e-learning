@@ -40,7 +40,7 @@ const Instructors = () => {
 								<img
 									src={`/${instructor.photo}`}
 									width="100%"
-									height="100%"
+									height="200px"
 								/>
 							</div>
 							<div

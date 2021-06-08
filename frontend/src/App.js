@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Navbar from "./components/Navbar";
 import {
 	BrowserRouter as Router,
@@ -15,7 +15,6 @@ import { useSelector } from "react-redux";
 import UserCart from "./components/UserCart";
 import MyCourses from "./components/MyCourses";
 import CourseVideo from "./components/CourseVideo";
-import axios from "axios";
 import ManageCourse from "./components/ManageCourse";
 import InstructorDashboard from "./components/InstructorDashboard";
 import CreateCourse from "./components/CreateCourse";
@@ -33,12 +32,6 @@ import StripeContainer from "./components/StripeContainer";
 const App = () => {
 	const auth = useSelector((state) => state.auth);
 
-	// useEffect(() => {
-	// 	axios
-	// 		.get("/checkout", { withCredentials: true })
-	// 		.then((res) => console.log(res.data));
-	// }, []);
-
 	return (
 		<Router>
 			{auth.user === null || auth.user.type === "student" ? (
@@ -48,7 +41,18 @@ const App = () => {
 			)}
 			<Switch>
 				<Route exact path="/" component={HomeRoute} />
-				<Route path="/student/update" component={StudentUpdate} />
+				<Route
+					path="/student/update"
+					render={() =>
+						!auth.isAuthenticated ||
+						(auth.isAuthenticated &&
+							auth.user.type !== "student") ? (
+							<Redirect to="/" />
+						) : (
+							<StudentUpdate />
+						)
+					}
+				/>
 				<Route path="/course/:id/manage" component={ManageCourse} />
 				<Route path="/course/create" component={CreateCourse} />
 				<Route path="/courses/:course/search" component={Search} />
@@ -58,12 +62,20 @@ const App = () => {
 				/>
 				<Route
 					path="/instructor/course"
-					component={InstructorDashboard}
+					render={() =>
+						!auth.isAuthenticated ||
+						(auth.isAuthenticated &&
+							auth.user.type !== "instructor") ? (
+							<Redirect to="/" />
+						) : (
+							<InstructorDashboard />
+						)
+					}
 				/>
 				<Route
 					path="/my-courses"
 					render={() =>
-						auth.isAuthenticated ? (
+						auth.isAuthenticated && auth.user.type === "student" ? (
 							<MyCourses />
 						) : (
 							<Redirect to="/" />
@@ -116,9 +128,30 @@ const App = () => {
 				/>
 				<Route path="/learn/:title" component={CourseVideo} />
 				<Route path="/courses/:title" component={CourseDetails} />
-				<Route path="/course/:courseId/stats" component={CourseStats} />
+				<Route
+					path="/course/:courseId/stats"
+					render={() =>
+						auth.isAuthenticated &&
+						auth.user.type === "instructor" ? (
+							<CourseStats />
+						) : (
+							<Redirect to="/" />
+						)
+					}
+				/>
 				<Route path="/instructors" component={Instructors} />
-				<Route path="/instructor/update" component={InstructorUpdate} />
+				<Route
+					path="/instructor/update"
+					render={() =>
+						!auth.isAuthenticated ||
+						(auth.isAuthenticated &&
+							auth.user.type !== "instructor") ? (
+							<Redirect to="/" />
+						) : (
+							<InstructorUpdate />
+						)
+					}
+				/>
 				<Route
 					path="/instructor/:instructorId"
 					component={InstructorDetails}

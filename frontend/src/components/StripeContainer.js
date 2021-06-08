@@ -12,8 +12,11 @@ const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
 const StripeContainer = (props) => {
 	const auth = useSelector((state) => state.auth);
-	if (!(auth.isAUthenticated && auth.type.user === "student")) {
-		props.history.push("/login");
+	if (
+		!auth.isAuthenticated ||
+		(auth.isAuthenticated && auth.user.type !== "student")
+	) {
+		props.history.push("/");
 	}
 	return (
 		<Container style={{ margin: "70px 0" }}>

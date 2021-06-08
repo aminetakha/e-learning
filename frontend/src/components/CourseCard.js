@@ -14,6 +14,7 @@ const useStyles = makeStyles({
 		flexDirection: "row",
 		height: 200,
 		marginTop: 50,
+		marginBottom: 70,
 		cursor: "pointer",
 	},
 	media: {

@@ -7,6 +7,7 @@ import web from "../assets/web.svg";
 import github from "../assets/github.svg";
 import youtube from "../assets/youtube.svg";
 import twitter from "../assets/twitter.svg";
+import InstructorCourses from "./InstructorCourses";
 
 const InstructorDetails = () => {
 	const { instructorId } = useParams();

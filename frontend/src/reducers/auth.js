@@ -20,7 +20,7 @@ const auth = (state = initialState, action) => {
 		case "REMOVE-COURSE":
 			return {
 				...state,
-				cart: state.cart - 1,
+				cart: state.cart !== 0 ? state.cart - 1 : 0,
 			};
 		case "ADD-COURSE":
 			return {

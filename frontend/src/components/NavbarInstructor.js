@@ -97,7 +97,13 @@ const NavbarInstructor = ({ history }) => {
 		<div className={classes.grow}>
 			<AppBar position="static">
 				<Toolbar className={classes.backColor}>
-					<Typography className={classes.title} variant="h6" noWrap>
+					<Typography
+						className={classes.title}
+						style={{ cursor: "pointer" }}
+						variant="h6"
+						noWrap
+						onClick={() => history.push("/instructor/course")}
+					>
 						OnlineClassroom
 					</Typography>
 					<div className={classes.grow} />

@@ -12,6 +12,7 @@ import {
 } from "react-notifications";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import CountryDropDown from "../CountryDropDown";
 
 const StudentForm = (props) => {
 	const [studentData, setStudentData] = useState({
@@ -138,13 +139,10 @@ const StudentForm = (props) => {
 							style={{ width: "70%", marginBottom: "30px" }}
 						>
 							<InputLabel htmlFor="country">Country</InputLabel>
-							<Input
-								id="country"
+							<CountryDropDown
 								name="country"
-								type="country"
-								aria-describedby="country-text"
-								value={studentData.country}
-								onChange={onChangeHandler}
+								country={studentData.country}
+								change={onChangeHandler}
 							/>
 						</FormControl>
 						<div>

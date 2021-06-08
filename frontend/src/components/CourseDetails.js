@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const CourseDetails = () => {
+const CourseDetails = (props) => {
 	const { title } = useParams();
 	const [course, setCourse] = useState(null);
 	const [rating, setRating] = useState(0);
@@ -62,20 +62,23 @@ const CourseDetails = () => {
 	const cart = useSelector((state) => state.cart);
 	const auth = useSelector((state) => state.auth);
 
+	if (auth.isAuthenticated && auth.user.type !== "student") {
+		props.history.push("/instructor/course");
+	}
+
 	useEffect(() => {
 		axios
 			.get(`http://localhost:5000/courses/${title}`)
 			.then((res) => {
-				const totalRating =
-					res.data.reviews.length > 0
-						? res.data.reviews.reduce(
-								(acc, curr) => acc.rating + curr.rating
-						  )
-						: 0;
+				let total = 0;
+				if (res.data.reviews.length > 0) {
+					res.data.reviews.forEach((review) => {
+						total += review.rating;
+					});
+				}
+
 				const averageRating =
-					totalRating !== 0
-						? totalRating / res.data.reviews.length
-						: 0;
+					total !== 0 ? total / res.data.reviews.length : 0;
 				setCourse(res.data);
 				setRating(averageRating);
 				let found;
@@ -227,17 +230,18 @@ const CourseDetails = () => {
 											</Link>
 										</div>
 									) : courseAdded ? (
-										<Link
-											to="/cart"
-											style={{
-												textDecoration: "none",
-												display: "flex",
-												flexDirection: "column",
-											}}
-										>
-											<Button>Go To Cart</Button>
-											<Button>Buy Now</Button>
-										</Link>
+										<div>
+											<Link
+												to="/cart"
+												style={{
+													textDecoration: "none",
+													display: "flex",
+													flexDirection: "column",
+												}}
+											>
+												<Button>Go To Cart</Button>
+											</Link>
+										</div>
 									) : (
 										<>
 											<Button
@@ -253,7 +257,16 @@ const CourseDetails = () => {
 											>
 												Add To Cart
 											</Button>
-											<Button>Buy Now</Button>
+											<Link
+												to={`/courses/${course.id}/enroll`}
+												style={{
+													textDecoration: "none",
+													display: "flex",
+													flexDirection: "column",
+												}}
+											>
+												<Button>Buy Now</Button>
+											</Link>
 										</>
 									)}
 								</CardContent>

@@ -23,7 +23,7 @@ const MyCourses = () => {
 	}
 
 	return (
-		<Container>
+		<Container style={{ marginBottom: "50px", marginTop: "50px" }}>
 			<h1 style={{ margin: "30px 0" }}>My Courses</h1>
 			<div>
 				{courses.length === 0 ? (

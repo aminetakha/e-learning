@@ -12,6 +12,7 @@ import {
 	NotificationContainer,
 	NotificationManager,
 } from "react-notifications";
+import CountryDropDown from "../CountryDropDown";
 
 const InstructorForm = (props) => {
 	const [instructorData, setInstructorData] = useState({
@@ -147,13 +148,10 @@ const InstructorForm = (props) => {
 							style={{ width: "70%", marginBottom: "30px" }}
 						>
 							<InputLabel htmlFor="country">Country</InputLabel>
-							<Input
-								id="country"
+							<CountryDropDown
 								name="country"
-								type="country"
-								aria-describedby="country-text"
-								value={instructorData.country}
-								onChange={onChangeHandler}
+								country={instructorData.country}
+								change={onChangeHandler}
 							/>
 						</FormControl>
 						<FormControl

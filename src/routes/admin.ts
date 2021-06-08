@@ -41,9 +41,6 @@ router.post("/login", async (req: any, res: Response) => {
 	}
 });
 
-/**
- add a pre-defined admin account
-
 router.post("/signup", async (req, res) => {
 	const admin = new Admin();
 	admin.email = "admin@gmail.com";
@@ -52,8 +49,6 @@ router.post("/signup", async (req, res) => {
 	admin.password = hash;
 	await getRepository(Admin).save(admin);
 });
-
-*/
 
 router.get("/dashboard", verifyAdminJwt, async (req: any, res) => {
 	const studentService = Container.get(StudentService);
@@ -74,6 +69,74 @@ router.get("/dashboard", verifyAdminJwt, async (req: any, res) => {
 		students,
 		instructors,
 		courses,
+		categories,
+		totalEarning,
+		totalStudentCount,
+		totalInstructorCount,
+		totalCoursesCount,
+	});
+});
+
+router.get("/instructors", verifyAdminJwt, async (req: any, res) => {
+	const studentService = Container.get(StudentService);
+	const instructorService = Container.get(InstructorService);
+	const courseService = Container.get(CourseService);
+
+	const students = await studentService.getAllStudents();
+	const instructors = await instructorService.getAllInstructors();
+	const courses = await courseService.getAllCourses();
+	const totalEarning = await courseService.getTotalEarning();
+	const totalStudentCount = students.length;
+	const totalInstructorCount = instructors.length;
+	const totalCoursesCount = courses.length;
+
+	res.render("instructors", {
+		instructors,
+		totalEarning,
+		totalStudentCount,
+		totalInstructorCount,
+		totalCoursesCount,
+	});
+});
+
+router.get("/courses", verifyAdminJwt, async (req: any, res) => {
+	const studentService = Container.get(StudentService);
+	const instructorService = Container.get(InstructorService);
+	const courseService = Container.get(CourseService);
+
+	const students = await studentService.getAllStudents();
+	const instructors = await instructorService.getAllInstructors();
+	const courses = await courseService.getAllCourses();
+	const totalEarning = await courseService.getTotalEarning();
+	const totalStudentCount = students.length;
+	const totalInstructorCount = instructors.length;
+	const totalCoursesCount = courses.length;
+
+	res.render("courses", {
+		courses,
+		totalEarning,
+		totalStudentCount,
+		totalInstructorCount,
+		totalCoursesCount,
+	});
+});
+
+router.get("/categories", verifyAdminJwt, async (req: any, res) => {
+	const studentService = Container.get(StudentService);
+	const instructorService = Container.get(InstructorService);
+	const courseService = Container.get(CourseService);
+	const categoryService = Container.get(CategoryService);
+
+	const students = await studentService.getAllStudents();
+	const instructors = await instructorService.getAllInstructors();
+	const courses = await courseService.getAllCourses();
+	const totalEarning = await courseService.getTotalEarning();
+	const totalStudentCount = students.length;
+	const totalInstructorCount = instructors.length;
+	const totalCoursesCount = courses.length;
+	const categories = await categoryService.getAll();
+
+	res.render("categories", {
 		categories,
 		totalEarning,
 		totalStudentCount,

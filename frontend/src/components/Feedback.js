@@ -1,5 +1,18 @@
 import React, { useState } from "react";
-import { FormControl, InputLabel, Input, Button } from "@material-ui/core";
+import {
+	FormControl,
+	InputLabel,
+	Input,
+	Button,
+	Typography,
+	Box,
+} from "@material-ui/core";
+import Rating from "@material-ui/lab/Rating";
+import {
+	NotificationContainer,
+	NotificationManager,
+} from "react-notifications";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 import axios from "axios";
 
 const Feedback = ({ courseId }) => {
@@ -19,9 +32,13 @@ const Feedback = ({ courseId }) => {
 			withCredentials: true,
 		});
 		if ("success" in res.data) {
-			alert(res.data.success);
+			setFeedBack({
+				review: "",
+				rating: "",
+			});
+			NotificationManager.success(res.data.success, "Success");
 		} else if ("error" in res.data) {
-			alert(res.data.error);
+			NotificationManager.success(res.data.error, "Error");
 		}
 	};
 
@@ -40,6 +57,7 @@ const Feedback = ({ courseId }) => {
 				padding: "20px",
 			}}
 		>
+			<NotificationContainer />
 			<h2>Add Feedback</h2>
 			<form onSubmit={addFeedbackHandler}>
 				<div>
@@ -54,16 +72,20 @@ const Feedback = ({ courseId }) => {
 						/>
 					</FormControl>
 				</div>
-				<div style={{ marginBottom: "30px" }}>
+				<div>
 					<FormControl>
-						<InputLabel htmlFor="rating">Rating</InputLabel>
-						<Input
-							id="rating"
-							name="rating"
-							aria-describedby="rating-text"
-							value={feedback.rating}
-							onChange={onChangeHandler}
-						/>
+						<Box component="fieldset" borderColor="transparent">
+							<Typography component="legend">Rating</Typography>
+							<Rating
+								id="rating"
+								name="rating"
+								defaultValue={feedback.rating}
+								onChange={onChangeHandler}
+								emptyIcon={
+									<StarBorderIcon fontSize="inherit" />
+								}
+							/>
+						</Box>
 					</FormControl>
 				</div>
 				<div>

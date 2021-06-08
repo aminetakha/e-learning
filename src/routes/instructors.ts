@@ -64,7 +64,7 @@ router.post("/remove/:id", async (req: Request, res: Response) => {
 	const instructorService = Container.get(InstructorService);
 	try {
 		await instructorService.delete(parseInt(req.params.id));
-		res.redirect("/dashboard");
+		res.redirect("/instructors");
 	} catch (err) {
 		console.log(err);
 	}

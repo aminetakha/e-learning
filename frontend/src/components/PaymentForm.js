@@ -3,6 +3,12 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams, withRouter } from "react-router-dom";
 import Spinner from "./UI/Spinner";
+import {
+	NotificationContainer,
+	NotificationManager,
+} from "react-notifications";
+import { useDispatch } from "react-redux";
+import { removeCourse } from "../actions/auth";
 
 const CARD_OPTIONS = {
 	iconStyle: "solid",
@@ -30,17 +36,18 @@ function PaymentForm(props) {
 	const stripe = useStripe();
 	const elements = useElements();
 	const { courseId } = useParams();
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		axios
 			.get(`/students/verify/${courseId}`)
 			.then((res) => {
 				if (res.data.count) {
-					// return props.history.push(`/my-courses`);
+					return props.history.push(`/my-courses`);
 				}
 				setLoading(false);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => NotificationManager.error(err, "Error"));
 	}, [courseId]);
 
 	const handleSubmit = async (e) => {
@@ -53,6 +60,7 @@ function PaymentForm(props) {
 		if (!error) {
 			try {
 				const { id } = paymentMethod;
+				setLoading(true);
 				const response = await axios.post(
 					`/courses/${courseId}/enroll`,
 					{
@@ -62,6 +70,8 @@ function PaymentForm(props) {
 				);
 
 				if (response.data.success) {
+					dispatch(removeCourse());
+					setLoading(false);
 					setSuccess(true);
 				}
 			} catch (error) {
@@ -74,6 +84,7 @@ function PaymentForm(props) {
 
 	return (
 		<>
+			<NotificationContainer />
 			{loading ? (
 				<Spinner />
 			) : (

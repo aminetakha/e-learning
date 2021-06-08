@@ -58,7 +58,11 @@ const InstructorDashboard = (props) => {
 	const auth = useSelector((state) => state.auth);
 	const [search, setSearch] = useState("");
 
-	if (auth.user == null || auth.user.type === "student") {
+	if (
+		!auth.isAuthenticated ||
+		auth.user === null ||
+		auth.user.type === "student"
+	) {
 		props.history.replace("/");
 	}
 
@@ -89,7 +93,7 @@ const InstructorDashboard = (props) => {
 							display: "flex",
 						}}
 					>
-						<form onSubmit={searchHandler}>
+						{/* <form onSubmit={searchHandler}>
 							<div className={classes.search}>
 								<div className={classes.searchIcon}>
 									<SearchIcon />
@@ -105,7 +109,7 @@ const InstructorDashboard = (props) => {
 									onChange={(e) => setSearch(e.target.value)}
 								/>
 							</div>
-						</form>
+						</form> */}
 						<div>
 							<Link to="/course/create">
 								<Button variant="contained" color="secondary">
@@ -170,9 +174,19 @@ const InstructorDashboard = (props) => {
 										style={{
 											textDecoration: "none",
 											color: "crimson",
+											marginRight: "45px",
 										}}
 									>
 										View Course Statistics
+									</Link>
+									<Link
+										to={`/learn/${course.title}`}
+										style={{
+											textDecoration: "none",
+											color: "crimson",
+										}}
+									>
+										View Course
 									</Link>
 								</div>
 							</div>

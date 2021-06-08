@@ -34,7 +34,7 @@ router.post("/remove/:id", async (req: Request, res: Response) => {
 	const categoryService = Container.get(CategoryService);
 	try {
 		await categoryService.delete(parseInt(req.params.id));
-		res.redirect("/dashboard");
+		res.redirect("/categories");
 	} catch (err) {
 		console.log(err);
 	}
