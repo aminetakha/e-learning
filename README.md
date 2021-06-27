@@ -1,4 +1,4 @@
-# Awesome Project Build with TypeORM
+# E-leaning web application using React and Express
 
 Steps to run this project:
 
